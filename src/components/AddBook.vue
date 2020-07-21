@@ -38,10 +38,10 @@
       <p v-if="feedback" class="red-text">{{ feedback }}</p>
       <button class="btn indigo">Add Book</button>
     </div>
-    <div class="field center-align">
+  </form>
+     <div class="field center-align">
         <button class="btn indigo" @click="$router.push('Shelf')">Close</button>
     </div>
-  </form>
 </div>
 </template>
 <script>
