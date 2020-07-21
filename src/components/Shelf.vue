@@ -29,7 +29,9 @@
         <div class="collapsible-header header">{{book.Title}}</div>
           <div class="collapsible-body">
             <span>Author: {{book.Author}}</span>
+             <span>Category: {{book.Category}}</span>
             <div class="loan" v-if="book.Loan">on loan</div>
+            <div class="owned" v-if="book.Owned">Owned</div>
           </div>
       </li>
     </ul>
