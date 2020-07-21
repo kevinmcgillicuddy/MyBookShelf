@@ -1,7 +1,7 @@
 <template>
   <div class="edit-book container">
     <h2 class="center-align indigo-text">Edit Book </h2>
-    <form @submit.prevent="EditBook">
+    <form @submit.prevent="editBook">
       <div class="field title">
         <label for="title">Title:</label>
         <input type="text" name="title" v-model="Book.Title">
@@ -45,7 +45,7 @@
     </div>
   <div class="divider"></div>
     <div class="field center-align">
-          <button class="btn red" @click="$router.push('Shelf')"><i class="material-icons right">delete</i>Delete</button>
+          <button class="btn red" @click="deleteBook"><i class="material-icons right">delete</i>Delete</button>
     </div>
   <div>
     <!-- <a class="dropdown-trigger" href="#" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a>
@@ -88,7 +88,7 @@ export default {
         
     },
     methods:{
-      EditBook(){
+      editBook(){
         if (this.Book.Title && this.Book.Author ){
                 this.feedback = null
                 db.collection('Bookshelf').doc(this.$route.params.id).update({
@@ -104,7 +104,10 @@ export default {
             else{
                 this.feedback = "You must enter a title and author"
             }
-        }
+        },
+        deleteBook(){
+      db.collection('Bookshelf').doc(this.$route.params.id).delete().then(()=> this.$router.push({name:'Shelf'}))
+    }
     }
 
 }
