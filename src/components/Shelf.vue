@@ -56,7 +56,13 @@ export default {
   created(){
       db.collection('Bookshelf').get()
       .then(snapshot=>{
-        snapshot.forEach(book => {this.books.push(book.data())});
+        snapshot.forEach(book => {
+          let b = book.data()
+          //add in doc id to property
+          b.id = book.id
+          this.books.push(b)
+          
+          });
       })
     }
   }

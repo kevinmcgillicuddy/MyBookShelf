@@ -1,6 +1,6 @@
 <template>
     <div class="edit-book container">
-  <h2 class="center-align indigo-text">New Book </h2>
+  <h2 class="center-align indigo-text">Edit Book </h2>
   <form @submit.prevent="editBook">
     <div class="field title">
       <label for="title">Title:</label>
@@ -55,11 +55,41 @@ export default {
     Name: 'EditBook',
     data(){
         return{
-            
+            Author:null,
+            Loan:null,
+            Owned: null,
+            feedback:null,
+            ReadingNow:null,
+            Title:null,
+            Book:null
         }
+    },
+    created(){
+        //possibly use vuex in future
+       let ref= db.collection('smoothies').where('Title','==', this.$route.params.Title)
+       ref.get().then(snapshot =>{
+            snapshot.forEach(el =>  this.book = el.data());
+        })
+    },
+    methods:{
+
     }
+
 }
 </script>
 <style>
+.edit-book{
+    margin-top:60px;
+    padding:20px;
+    max-width:500px;
+}
+.edit-book h2{
+    margin:20px auto;
+    font-size: 2em;
+}
+.edit-book .field{
+    margin:20px auto;
+    position: relative;
+}
 
 </style>

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Shelf from '@/components/Shelf'
 import Login from '@/components/Login'
 import AddBook from '@/components/AddBook'
+import EditBook from '@/components/EditBook'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/AddBook',
       name: 'AddBook',
       component: AddBook
+    },
+    {
+      path: '/EditBook',
+      name: 'EditBook',
+      component: EditBook
     }
   ]
 })
