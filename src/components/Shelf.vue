@@ -30,8 +30,11 @@
           <div class="collapsible-body">
             <span>Author: {{book.Author}}</span>
              <span>Category: {{book.Category}}</span>
-            <div class="loan" v-if="book.Loan">on loan</div>
-            <div class="owned" v-if="book.Owned">Owned</div>
+              <div class="loan" v-if="book.Loan">on loan</div>
+              <div class="owned" v-if="book.Owned">Owned</div>
+                 <router-link :to="{name:'EditBook', params:{id:book.id}}">
+                  <i class="material-icons">edit</i>
+                  </router-link>
           </div>
       </li>
     </ul>
@@ -53,7 +56,17 @@ export default {
     }
   },
   mounted(){
-      M.AutoInit()
+       var DropDownElems = document.querySelectorAll('.dropdown-trigger');
+        let options = {
+          inDuration: 300,
+          outDuration: 300,
+          hover: true, // Activate on hover
+          coverTrigger: false, // Displays dropdown below the button
+          };
+        M.Dropdown.init(DropDownElems,options);
+        var ColapseElems = document.querySelectorAll('.collapsible');
+      M.Collapsible.init(ColapseElems)
+      // M.AutoInit()
     },
   created(){
       db.collection('Bookshelf').get()
