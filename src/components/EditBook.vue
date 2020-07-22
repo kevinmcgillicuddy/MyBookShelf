@@ -70,15 +70,14 @@ export default {
         }
     },
      mounted(){
-      //  var DropDownElems = document.querySelectorAll('.dropdown-trigger');
-      //   let options = {
-      //     inDuration: 300,
-      //     outDuration: 300,
-      //     hover: true, // Activate on hover
-      //     coverTrigger: false, // Displays dropdown below the button
-      //     };
-      //   M.Dropdown.init(DropDownElems,options);   
-            
+            //  var DropDownElems = document.querySelectorAll('.dropdown-trigger');
+            //   let options = {
+            //     inDuration: 300,
+            //     outDuration: 300,
+            //     hover: true, // Activate on hover
+            //     coverTrigger: false, // Displays dropdown below the button
+            //     };
+            //   M.Dropdown.init(DropDownElems,options);     
     },
     created(){
         //possibly use vuex in future

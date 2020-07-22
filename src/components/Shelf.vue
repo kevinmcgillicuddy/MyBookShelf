@@ -9,7 +9,7 @@
 </ul>
 <nav>
   <div class="nav-wrapper">
-    <a href="#!" class="brand-logo">Logo</a>
+    <a href="#!" class="brand-logo">My Bookshelf</a>
     <ul class="right hide-on-med-and-down">
       <li><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
       <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -17,14 +17,13 @@
   </div>
 </nav>
 
-    <!-- <nav class="nav-extended blue darken-3">
-         <div class="nav-content">
-           <span class="nav-title">Bookshelf</span>
-        </div>
-    </nav> -->
-  <ul class="collapsible" >
-      <li v-for="(book,index) in books" :key="index"> 
-        <div class="collapsible-header header">{{book.Title}}</div>
+  <form class="search">
+      <input class="form-control m-auto" type="text" name="search" placeholder="search" />
+   </form>
+
+  <ul class="collapsible popout" >
+      <li class = "li" v-for="(book,index) in books" :key="index"> 
+        <div class="collapsible-header"><i class="material-icons">library_books</i>{{book.Title}}</div>
           <div class="collapsible-body">
             <span>Author: {{book.Author}}</span>
              <span>Category: {{book.Category}}</span>
@@ -63,8 +62,18 @@ export default {
           };
         M.Dropdown.init(DropDownElems,options);
         var ColapseElems = document.querySelectorAll('.collapsible');
-      M.Collapsible.init(ColapseElems)
-      // M.AutoInit()
+       M.Collapsible.init(ColapseElems)
+  
+    const search = document.querySelector('.search input');
+      search.addEventListener('keyup',()=>{
+        const term = search.value.trim();
+           
+           this.books = this.books.Title.filter(function (item) {
+              return item.Title.match(term)   })
+        })
+
+
+ 
     },
   created(){
       db.collection('Bookshelf').get()
@@ -74,7 +83,6 @@ export default {
           //add in doc id to property
           b.id = book.id
           this.books.push(b)
-          
           });
       })
     }
@@ -84,15 +92,19 @@ export default {
 
 
 <style >
-.header{
-  margin-left: 40px auto;
-  margin-right: 40px auto;
-}
+
 .loan{
   	background: #ccc;
     box-shadow: 4px 3px 8px 1px #969696;
   	-webkit-box-shadow: 4px 3px 8px 1px #969696;
     width: 150px;
     height: 150px;
+}
+
+.li{
+  margin-left: 70px auto;
+  margin-right: 70px auto;
+  width: 500px auto;
+  
 }
 </style>
