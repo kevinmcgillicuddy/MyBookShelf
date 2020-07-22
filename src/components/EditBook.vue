@@ -41,7 +41,7 @@
       
   </form>
   <div class="field center-align">
-          <button class="btn indigo" @click="$router.push('Shelf')">Close</button>
+          <button class="btn indigo" @click="$router.push('/')">Close</button>
     </div>
   <div class="divider"></div>
     <div class="field center-align">

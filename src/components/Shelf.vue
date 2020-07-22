@@ -1,25 +1,8 @@
 <template>
  <div class="shelf" style="margin-top: 40px;">
-<!-- Dropdown Structure -->
-<ul id="dropdown1" class="dropdown-content">
-  <li><a href="#!">one</a></li>
-  <li><a href="#!">two</a></li>
-  <li class="divider"></li>
-  <li><a href="#!">three</a></li>
-</ul>
-<nav>
-  <div class="nav-wrapper">
-    <a href="#!" class="brand-logo">My Bookshelf</a>
-    <ul class="right hide-on-med-and-down">
-      <li><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
-      <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a></li>
-    </ul>
-  </div>
-</nav>
-
-  <form class="search">
-      <input class="form-control m-auto" type="text" name="search" placeholder="search" />
-   </form>
+   <label for="fname">Search term:</label>
+  <input type="text" id="fname" v-model="searchText">
+  <h2> {{ searchResults }} </h2>
 
   <ul class="collapsible popout" >
       <li class = "li" v-for="(book,index) in books" :key="index"> 
@@ -50,6 +33,7 @@ export default {
   data () {
     return {
       books:[],
+      searchText: ''
     }
   },
   mounted(){
@@ -63,17 +47,7 @@ export default {
         M.Dropdown.init(DropDownElems,options);
         var ColapseElems = document.querySelectorAll('.collapsible');
        M.Collapsible.init(ColapseElems)
-  
-    const search = document.querySelector('.search input');
-      search.addEventListener('keyup',()=>{
-        const term = search.value.trim();
-           
-           this.books = this.books.Title.filter(function (item) {
-              return item.Title.match(term)   })
-        })
 
-
- 
     },
   created(){
       db.collection('Bookshelf').get()
@@ -85,8 +59,14 @@ export default {
           this.books.push(b)
           });
       })
+    },
+  Computed:{
+    searchResults: function () {
+      if (this.searchText.length === 0) return '';
+      return this.books.filter(book => book.Title.match(this.searchText))
     }
   }
+}
   
 </script>
 
