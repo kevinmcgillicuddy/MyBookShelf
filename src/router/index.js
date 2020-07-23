@@ -4,10 +4,11 @@ import Shelf from '@/components/Shelf'
 import Login from '@/components/Login'
 import AddBook from '@/components/AddBook'
 import EditBook from '@/components/EditBook'
+import firebase from 'firebase'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -22,12 +23,33 @@ export default new Router({
     {
       path: '/AddBook',
       name: 'AddBook',
-      component: AddBook
+      component: AddBook,
+      meta:{
+        requiresAuth: true
+      }
     },
     {
       path: '/EditBook/:id',
       name: 'EditBook',
-      component: EditBook
+      component: EditBook,
+      meta:{
+        requiresAuth: true
+      }
     }
   ]
 })
+
+router.beforeEach((to,from,next)=>{
+  if(to.matched.some(rec=>rec.meta.requiresAuth)){
+    let user = firebase.auth().currentUser
+    if(user){
+      next()
+    } else{
+      next({name:'Login'})
+    }
+  }
+  else{
+    next()
+  }
+})
+export default router
