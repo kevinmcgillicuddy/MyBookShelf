@@ -1,21 +1,27 @@
 <template>
  <div class="shelf" style="margin-top: 40px;">
    <label for="fname">Search term:</label>
-  <input type="text" id="fname" v-model="searchText">
-  <h2> {{ searchResults }} </h2>
-
+  <input type="text" id="fname" v-model="term">
+ <div v-for="(book, index) in foundedBooks" :key="index">
+  {{ index+1 }}. {{ book.Title }}
+</div>
   <ul class="collapsible popout" >
       <li class = "li" v-for="(book,index) in books" :key="index"> 
-        <div class="collapsible-header"><i class="material-icons">library_books</i>{{book.Title}}</div>
+        <div class="collapsible-header flow-text"><i class="material-icons">library_books</i>{{book.Title}}</div>
           <div class="collapsible-body">
-            <span>Author: {{book.Author}}</span>
-             <span>Category: {{book.Category}}</span>
-              <div class="loan" v-if="book.Loan">on loan</div>
-              <div class="owned" v-if="book.Owned">Owned</div>
-                 <router-link :to="{name:'EditBook', params:{id:book.id}}">
-                  <i class="material-icons">edit</i>
-                  </router-link>
-          </div>
+            <div class="container">
+                <div class="row">
+                  <div class="col s6 flow-text"><b>Author:</b> {{book.Author}}</div>
+                  <div class="col s6 flow-text"><b>Category:</b> {{book.Category}}</div>
+                  <div class="col s6">
+                    <div class="loan flow-text" v-if="book.Loan"><i class="material-icons">check</i>On loan</div>
+                    <div class="owned flow-text" v-if="book.Owned"><i class="material-icons">check</i>Owned</div></div>
+                  <div class="col s6">
+                    <router-link :to="{name:'EditBook', params:{id:book.id}}"><a class="btn-floating btn-small waves-effect waves-light indigo"><i class="material-icons">edit</i></a></router-link>
+                  </div>
+                </div>
+            </div>
+         </div>
       </li>
     </ul>
 
@@ -33,7 +39,7 @@ export default {
   data () {
     return {
       books:[],
-      searchText: ''
+      term: ''
     }
   },
   mounted(){
@@ -60,14 +66,17 @@ export default {
           });
       })
     },
-  Computed:{
-    searchResults: function () {
-      if (this.searchText.length === 0) return '';
-      return this.books.filter(book => book.Title.match(this.searchText))
-    }
+ computed: {
+  filteredBooks() {
+    const foundedBooks = this.books.filter(book => {  
+        const regex = new RegExp(this.term.trim());
+        return String(book.Title).match(regex)   
+    });
+  
+    return foundedBooks;
   }
 }
-  
+}
 </script>
 
 
@@ -84,7 +93,9 @@ export default {
 .li{
   margin-left: 70px auto;
   margin-right: 70px auto;
-  width: 500px auto;
-  
+ 
+}
+.edit{
+  left: 80%;
 }
 </style>
