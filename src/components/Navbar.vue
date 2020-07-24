@@ -1,11 +1,11 @@
 <template>
 <nav class="nav-extended indigo">
     <div class="nav-wrapper">
-      <a href="/" class="brand-logo">My Bookshelf</a>
+      <a href="/" class="brand-logo nb"><i class="material-icons"></i>My Bookshelf</a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li v-if="!user"><router-link :to="{name:'Login'}">Log In</router-link></li>
-        <li><router-link :to="{name:'Search'}">Search</router-link></li>
+        <li><router-link :to="{name:'Search'}"><i class="material-icons">search</i></router-link></li>
         <li v-if="user"><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
         <li v-if="user"><a @click="logout">Log Out</a></li>
       </ul>
@@ -49,5 +49,7 @@ export default {
 </script>
 
 <style>
-
+.nb{
+  left:50px
+}
 </style>
