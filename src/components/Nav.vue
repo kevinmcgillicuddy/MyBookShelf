@@ -22,7 +22,7 @@
 import M from 'materialize-css'
 import firebase from 'firebase'
 export default {
-    name: Navbar,
+    name: Nav,
     data(){
         return {
           user:null

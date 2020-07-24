@@ -1,35 +1,47 @@
 <template>
- <div class="shelf" style="margin-top: 40px;">
-   <label for="fname">Search term:</label>
-  <input type="text" id="fname" v-model="term">
- <div v-for="(book, index) in foundedBooks" :key="index">
-  {{ index+1 }}. {{ book.Title }}
-</div>
-  <ul class="collapsible popout" >
-      <li class = "li" v-for="(book,index) in books" :key="index"> 
-        <div class="collapsible-header flow-text"><i class="material-icons">library_books</i>{{book.Title}}</div>
+  <div>
+    <div class="shelf" style="margin: 40px;">
+      <h6>Here you can search a title of any book that is in the list</h6>
+      <label for="fname">Search term:</label>
+      <input type="text" id="fname" v-model="searchText">
+      <ul class="collapsible popout">
+        <h6 v-if="searchResults.length">Search results</h6>
+        <li class="li" v-for="(book,index) in searchResults" :key="index">
+          <div class="collapsible-header">
+            <h5>
+              {{ book.Title }}
+            </h5>
+          </div>
           <div class="collapsible-body">
-            <div class="container">
-                <div class="row">
-                  <div class="col s6 flow-text"><b>Author:</b> {{book.Author}}</div>
-                  <div class="col s6 flow-text"><b>Category:</b> {{book.Category}}</div>
-                  <div class="col s6">
-                    <div class="loan flow-text" v-if="book.Loan"><i class="material-icons">check</i>On loan</div>
-                    <div class="owned flow-text" v-if="book.Owned"><i class="material-icons">check</i>Owned</div></div>
-                  <div class="col s6">
-                    <router-link :to="{name:'EditBook', params:{id:book.id}}"><a class="btn-floating btn-small waves-effect waves-light indigo"><i class="material-icons">edit</i></a></router-link>
-                  </div>
-                </div>
-            </div>
-         </div>
+            <p>Author: {{book.Author}}</p>
+            <p>Category: {{book.Category}}</p>
+            <div class="loan" v-if="book.Loan">on loan</div>
+            <div class="owned" v-if="book.Owned">Owned</div>
+               <router-link :to="{name:'EditBook', params:{id:book.id}}">
+               <i class="material-icons">edit</i>
+            </router-link>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <h5>Here is the list of avalaible books</h5>
+    <ul class="collapsible popout" style="margin: 40px;">
+      <li class="li" v-for="(book,index) in books" :key="index">
+        <div class="collapsible-header">
+          <h5>
+             {{ book.Title }}
+          </h5>
+        </div>
+        <div class="collapsible-body">
+          <p>Author: {{book.Author}}</p>
+          <p>Category: {{book.Category}}</p>
+          <div class="loan" v-if="book.Loan">on loan</div>
+          <div class="owned" v-if="book.Owned">Owned</div>
+        </div>
       </li>
     </ul>
-
   </div>
-
-  
 </template>
-
 <script>
 import db from '@/firebase/init'
 import firebase from 'firebase'
@@ -39,7 +51,7 @@ export default {
   data () {
     return {
       books:[],
-      term: ''
+      searchText: ''
     }
   },
   mounted(){
@@ -60,28 +72,24 @@ export default {
       .then(snapshot=>{
         snapshot.forEach(book => {
           let b = book.data()
-          //add in doc id to property
           b.id = book.id
           this.books.push(b)
-          });
+             });
       })
     },
  computed: {
-  filteredBooks() {
-    const foundedBooks = this.books.filter(book => {  
-        const regex = new RegExp(this.term.trim());
-        return String(book.Title).match(regex)   
-    });
-  
-    return foundedBooks;
+     searchResults() {
+     if (this.searchText.length === 0) return "";
+      return this.books.filter(book => {
+           if (!book.Title) return null;
+          const stringTitle = book.Title.toString().toLowerCase()
+          return stringTitle.match(this.searchText.toLowerCase())
+      });
+    }
   }
 }
-}
 </script>
-
-
 <style >
-
 .loan{
   	background: #ccc;
     box-shadow: 4px 3px 8px 1px #969696;
@@ -89,7 +97,6 @@ export default {
     width: 150px;
     height: 150px;
 }
-
 .li{
   margin-left: 70px auto;
   margin-right: 70px auto;
