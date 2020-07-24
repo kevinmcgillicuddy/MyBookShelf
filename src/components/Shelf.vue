@@ -43,7 +43,6 @@ export default {
     
     },
   created(){
-    
     this.user = firebase.auth().currentUser
      db.collection('Bookshelf').get()
       .then(snapshot=>{
