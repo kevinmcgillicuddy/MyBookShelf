@@ -65,7 +65,8 @@ export default {
                     Author: this.Author,
                     Title: this.Title,
                     ReadingNow: this.ReadingNow,
-                    Owned: this.Owned
+                    Owned: this.Owned,
+                    Loan: this.Loan
                     })
                 .then(()=>{
                     this.Author=null
