@@ -11,13 +11,14 @@
             <div class="col s6">
                 <div class="info" v-if="book.Owned"><span class= "new badge blue" data-badge-caption="Owned"></span></div>
                 <div class="info" v-else><span class= "new badge cyan" data-badge-caption="Read"></span></div></div>
+                <div class="info" v-if="book.Loan"><span class= "new badge red" data-badge-caption="OnLoan"></span></div>
+                
             </div>        
         </div>
         <div class="collapsible-body">
           <p><b>Author:</b> {{book.Author}}</p>
           <p><b>Category:</b> {{book.Category}}</p>
           <p v-if="user"><router-link :to="{name:'EditBook', params:{id:book.id}}"><i class="material-icons">edit</i></router-link></p>
-          <span class= "new badge red" data-badge-caption="On Loan" v-if="book.Loan"></span>
           <br>
         </div>
       </li>
@@ -34,7 +35,6 @@ export default {
     return {
       books:[],
       user:null,
-      val:null
     }
   },
   mounted(){  
@@ -52,19 +52,7 @@ export default {
           this.books.push(b)
              });
       })
-    },
- computed: {
-     searchResults() {
-     if (this.searchText.length === 0) return "";
-      return this.books.filter(book => {
-          const string = JSON.stringify(book,['Author','Title','Category']).toLowerCase()
-          return string.match(this.searchText.toLowerCase())
-      });
-    },
-    log(){
-      console.log(this.val)
     }
-  }
 }
 </script>
 <style >
