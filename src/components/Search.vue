@@ -12,26 +12,29 @@
       </div>
     </div>
   </div>
-    <ul class="collapsible popout" style="margin: 40px;">
-    <h6 v-if="searchResults.length">Search results</h6>
+<ul class="collapsible popout" style="margin: 40px;">
       <li class="li" v-for="(book,index) in searchResults" :key="index">
+        <div class="row">
         <div class="collapsible-header ">
-          <div v-if="!book.Loan" ><i class="material-icons">book</i>{{book.Title}}</div>
-          <div v-else><i class="material-icons">people_outline</i>{{book.Title}}</div>
-          <span class= "new badge blue" data-badge-caption="Owned" v-if="book.Owned"></span>
+            <div class="col s6">
+                <div v-if="!book.Loan" ><i class="material-icons">book</i>{{book.Title}}</div>
+                <div v-else><i class="material-icons">people_outline</i>{{book.Title}}</div>
+            </div>
+            <div class="col s6">
+                <div class="info" v-if="book.Owned"><span class= "new badge blue" data-badge-caption="Owned"></span></div>
+                <div class="info" v-else><span class= "new badge cyan" data-badge-caption="Read"></span></div></div>
+                <div class="info" v-if="book.Loan"><span class= "new badge red" data-badge-caption="OnLoan"></span></div>
+                
+            </div>        
         </div>
         <div class="collapsible-body">
           <p><b>Author:</b> {{book.Author}}</p>
           <p><b>Category:</b> {{book.Category}}</p>
           <p v-if="user"><router-link :to="{name:'EditBook', params:{id:book.id}}"><i class="material-icons">edit</i></router-link></p>
-          <span class= "new badge red" data-badge-caption="On Loan" v-if="book.Loan"></span>
           <br>
         </div>
       </li>
     </ul>
-
-
-
     </div>
 </template>
 <script>
@@ -56,6 +59,11 @@ export default {
           this.books.push(b)
              });
       })
+    },
+     mounted(){  
+      var ColapseElems = document.querySelectorAll('.collapsible');
+      M.Collapsible.init(ColapseElems)
+    
     },
      computed: {
      searchResults() {
