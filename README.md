@@ -1,6 +1,7 @@
 # bookshelf
 
 > My Bookshelf
+https://bookshelf.mcgillicuddy.dev/
 
 ## Build Setup
 
