@@ -10,6 +10,10 @@
         <label for="author">Author:</label>
         <input type="text" name="author" v-model="Book.Author">
       </div>
+      <div class="field category">
+        <label for="author">Category:</label>
+        <input type="text" name="Novel, Theology, Non Fiction" v-model="Book.Category">
+      </div>   
       <div class="row">
           <div class="col s6">
             <p>
@@ -49,7 +53,7 @@
     </div>
   <div>
    </div>
-</div>
+ </div>
 </template>
 <script>
 import db from '@/firebase/init'
@@ -63,23 +67,11 @@ export default {
             Book:null
         }
     },
-     mounted(){
-            //  var DropDownElems = document.querySelectorAll('.dropdown-trigger');
-            //   let options = {
-            //     inDuration: 300,
-            //     outDuration: 300,
-            //     hover: true, // Activate on hover
-            //     coverTrigger: false, // Displays dropdown below the button
-            //     };
-            //   M.Dropdown.init(DropDownElems,options);     
-    },
     created(){
-        //possibly use vuex in future
        let ref= db.collection('Bookshelf').doc(this.$route.params.id)
        ref.get().then(doc =>{
            this.Book = doc.data()
         })
-        
     },
     methods:{
       editBook(){
@@ -90,7 +82,8 @@ export default {
                     Author: this.Book.Author,
                     Loan: this.Book.Loan,
                     ReadingNow: this.Book.ReadingNow,
-                    Owned: this.Book.Owned
+                    Owned: this.Book.Owned,
+                    Category: this.Book.Category
                    })
                    .then(()=> this.$router.push({name:'Shelf'}))
                    .catch((err)=> console.log(err))
