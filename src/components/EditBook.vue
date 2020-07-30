@@ -48,13 +48,7 @@
           <button class="btn red" @click="deleteBook"><i class="material-icons right">delete</i>Delete</button>
     </div>
   <div>
-    <a class="dropdown-trigger" href="#" data-target="dropdown1">Dropdown<i class="material-icons right">arrow_drop_down</i></a>
-   <ul id='dropdown1' class='dropdown-content'>
-            <li>Theology</li>
-            <li>Novel</li>
-   </ul>
-
-  </div>
+   </div>
 </div>
 </template>
 <script>
