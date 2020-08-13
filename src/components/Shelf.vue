@@ -24,7 +24,6 @@
       </li>
     </ul>
     </div>
-  </div>
 </template>
 <script>
 import db from '@/firebase/init'
