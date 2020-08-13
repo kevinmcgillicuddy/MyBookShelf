@@ -10,6 +10,10 @@
         <label for="author">Author:</label>
         <input type="text" name="author" v-model="Author">
       </div>
+      <div class="field author">
+        <label for="Category">Category [Novels, Non Fiction, Theology]:</label>
+        <input type="text" name="Category" v-model="Category">
+      </div>
       <div class="row">
           <div class="col s6">
             <p>
@@ -51,10 +55,11 @@ export default {
     data(){
         return{
             Author:null,
-            Loan:null,
-            Owned: null,
+            Category:null,
+            Loan:false,
+            Owned: false,
             feedback:null,
-            ReadingNow:null,
+            ReadingNow:false,
             Title:null
             }
     },
@@ -66,11 +71,13 @@ export default {
                     Title: this.Title,
                     ReadingNow: this.ReadingNow,
                     Owned: this.Owned,
-                    Loan: this.Loan
+                    Loan: this.Loan,
+                    Category: this.Category
                     })
                 .then(()=>{
                     this.Author=null
                     this.Title=null
+                    this.Category=null
                 })
                 this.feedback = null
             }
@@ -78,7 +85,6 @@ export default {
                 this.feedback = "You must enter all fields"
             }
         }
-           
     }
 }
 </script>
