@@ -1,19 +1,7 @@
 <template>
   <div>
-    <div class="shelf" style="margin: 40px;">
-      <div class="row">
-    <div class="col s12">
-      <div class="row">
-        <div class="input-field col s6">
-          <i class="material-icons prefix">search</i>
-          <textarea id="icon_prefix2" class="materialize-textarea" v-model="searchText"></textarea>
-          <label for="icon_prefix2">Search Author, Title or Category</label>
-        </div>
-      </div>
-    </div>
-  </div>
-<ul class="collapsible popout" style="margin: 40px;">
-      <li class="li" v-for="(book,index) in searchResults" :key="index">
+    <ul class="collapsible popout" style="margin: 40px;">
+      <li class="li" v-for="(book,index) in VuexBooks" :key="index">
         <div class="row">
         <div class="collapsible-header ">
             <div class="col s6">
@@ -46,38 +34,23 @@ export default {
   name: 'Shelf',
   data () {
     return {
-      books:[],
-      searchText: '',
       user:null
     }
   },
   mounted(){  
       var ColapseElems = document.querySelectorAll('.collapsible');
       M.Collapsible.init(ColapseElems)
-    
     },
   created(){
     this.user = firebase.auth().onAuthStateChanged(user=>{
             if (user){this.user = user}
             else{this.user = null}
-        })
-     db.collection('Bookshelf').get()
-      .then(snapshot=>{
-        snapshot.forEach(book => {
-          let b = book.data()
-          b.id = book.id
-          this.books.push(b)
-             });
-      })
+        }) 
     },
     computed: {
-     searchResults() {
-     if (this.searchText.length === 0) return "";
-      return this.books.filter(book => {
-          const string = JSON.stringify(book,['Author','Title','Category']).toLowerCase()
-          return string.match(this.searchText.toLowerCase())
-      });
-    }
+    VuexBooks(){
+       return this.$store.state.books;
+     }
   }
 }
 </script>

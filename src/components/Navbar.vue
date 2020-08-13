@@ -5,12 +5,14 @@
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li v-if="!user"><router-link :to="{name:'Login'}">Log In</router-link></li>
+        <li><router-link :to="{name:'Search'}"><i class="material-icons">search</i></router-link></li>
         <li v-if="user"><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
         <li v-if="user"><a @click="logout">Log Out</a></li>
       </ul>
     </div>
       <ul class="sidenav" id="mobile-demo">
         <li v-if="!user"><router-link :to="{name:'Login'}">Log In</router-link></li>
+        <li><router-link :to="{name:'Search'}">Search</router-link></li>
         <li v-if="user"><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
         <li v-if="user"><a @click="logout">Log Out</a></li>
     </ul>

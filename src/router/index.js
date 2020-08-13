@@ -4,6 +4,7 @@ import Shelf from '@/components/Shelf'
 import Login from '@/components/Login'
 import AddBook from '@/components/AddBook'
 import EditBook from '@/components/EditBook'
+import Search from '@/components/Search'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -14,6 +15,11 @@ const router = new Router({
       path: '/',
       name: 'Shelf',
       component: Shelf
+    },
+    {
+      path: '/Search',
+      name: 'Search',
+      component: Search
     },
     {
       path: '/Login',
