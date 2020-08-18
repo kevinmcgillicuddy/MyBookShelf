@@ -103,5 +103,4 @@ export default {
     margin:20px auto;
     position: relative;
 }
-
 </style>
