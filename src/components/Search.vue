@@ -1,16 +1,36 @@
 <template>
-    <div class="shelf" style="margin: 40px;">
-      <div class="row">
-    <div class="col s12">
+    <div class="search" style="margin: 40px;">
+      <!-- <div class="row">
+    <div class="col s6">
       <div class="row">
         <div class="input-field col s6">
           <i class="material-icons prefix">search</i>
           <textarea id="icon_prefix2" class="materialize-textarea" v-model="searchText"></textarea>
           <label for="icon_prefix2">Search Author, Title or Category</label>
+           <div class="row">
+    <div class="col s6">
+          <div>{{searchResults.length}} out of {{VuexBooks.length}}</div>
+    </div>
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
+<div class="container">
+    <div class="row">
+     
+      <div class="col s6">
+        <!-- <i class="material-icons prefix">search</i> -->
+        <textarea id="icon_prefix2" class="materialize-textarea" v-model="searchText"></textarea>
+        <label for="icon_prefix2">Search Author, Title or Category</label>
+      </div>
+
+
+
+      <div class="col s6"><blockquote style="border-left: 5px solid #01579b "><h5>{{searchResults.length}} out of {{VuexBooks.length}} Showing</h5></blockquote></div>
+    </div>
+</div>
+
+
 <ul class="collapsible popout" style="margin: 40px;">
       <li class="li" v-for="(book,index) in searchResults" :key="index">
         <div class="row">
@@ -64,6 +84,9 @@ export default {
           const string = JSON.stringify(book,['Author','Title','Category']).toLowerCase()
           return string.match(this.searchText.toLowerCase())
       });
+     },
+      VuexBooks(){
+       return this.$store.state.books;
      } 
   }
 }
