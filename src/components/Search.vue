@@ -1,25 +1,9 @@
 <template>
     <div class="search" style="margin: 40px;">
-      <!-- <div class="row">
-    <div class="col s6">
-      <div class="row">
-        <div class="input-field col s6">
-          <i class="material-icons prefix">search</i>
-          <textarea id="icon_prefix2" class="materialize-textarea" v-model="searchText"></textarea>
-          <label for="icon_prefix2">Search Author, Title or Category</label>
-           <div class="row">
-    <div class="col s6">
-          <div>{{searchResults.length}} out of {{VuexBooks.length}}</div>
-    </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
 <div class="container">
     <div class="row">
      
       <div class="col s6">
-        <!-- <i class="material-icons prefix">search</i> -->
         <textarea id="icon_prefix2" class="materialize-textarea" v-model="searchText"></textarea>
         <label for="icon_prefix2">Search Author, Title or Category</label>
       </div>
@@ -31,29 +15,48 @@
 </div>
 
 
-<ul class="collapsible popout" style="margin: 40px;">
-      <li class="li" v-for="(book,index) in searchResults" :key="index">
-        <div class="row">
-        <div class="collapsible-header ">
-            <div class="col s6">
-                <div v-if="!book.Loan" ><i class="material-icons">book</i>{{book.Title}}</div>
-                <div v-else><i class="material-icons">people_outline</i>{{book.Title}}</div>
+<div class="index container">
+    <div class="card" v-for="(book,index) in searchResults" :key="index">
+      <div class="card-content indigo lighten-5">
+        <h2 class="indigo-text card-title">{{ book.Title }}</h2>
+        <ul class="card-content">
+          <li>
+            <p>
+              <b>Author:</b>
+              {{book.Author}}
+            </p>
+            <p>
+              <b>Category:</b>
+              {{book.Category}}
+            </p>
+            <p v-if="user">
+              <router-link :to="{name:'EditBook', params:{id:book.id}}">
+                <i class="material-icons">edit</i>
+              </router-link>
+            </p>
+          </li>
+        </ul>
+      </div>
+      <div class="card-action">
+        <ul class="tag">
+          <li>
+            <div class="row">
+              <div class="col s6 info" v-if="book.Owned">
+                <span class="new badge blue" data-badge-caption="Owned"></span>
+              </div>
+              <div class="col s6 info" v-else>
+                <span class="new badge cyan" data-badge-caption="Read"></span>
+              </div>
+              <div class="col s6 info" v-if="book.Loan">
+                <span class="new badge red" data-badge-caption="OnLoan"></span>
+              </div>
             </div>
-            <div class="col s6">
-                <div class="info" v-if="book.Owned"><span class= "new badge blue" data-badge-caption="Owned"></span></div>
-                <div class="info" v-else><span class= "new badge cyan" data-badge-caption="Read"></span></div></div>
-                <div class="info" v-if="book.Loan"><span class= "new badge red" data-badge-caption="OnLoan"></span></div>          
-            </div>        
-        </div>
-        <div class="collapsible-body">
-          <p><b>Author:</b> {{book.Author}}</p>
-          <p><b>Category:</b> {{book.Category}}</p>
-          <p v-if="user"><router-link :to="{name:'EditBook', params:{id:book.id}}"><i class="material-icons">edit</i></router-link></p>
-          <br>
-        </div>
-      </li>
-    </ul>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
+  </div>
 </template>
 <script>
 import db from '@/firebase/init'
