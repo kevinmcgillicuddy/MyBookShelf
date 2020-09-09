@@ -6,7 +6,9 @@ var config = {
     projectId: "my-bookshelf-d9b0e",
     storageBucket: "my-bookshelf-d9b0e.appspot.com",
     messagingSenderId: "974885411889",
-    appId: "1:974885411889:web:7e2c2ed9c897eadf408910"
+    appId: "1:974885411889:web:7e2c2ed9c897eadf408910",
+    measurementId: "G-3CVLKJ7TEK"
 };
 const firebaseApp = firebase.initializeApp(config);
 export default firebaseApp.firestore()
+firebaseApp.analytics();
