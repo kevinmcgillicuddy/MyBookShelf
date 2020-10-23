@@ -1,26 +1,26 @@
 <template>
-<nav class="nav-extended indigo">
-    <div class="nav-wrapper">
-      <a href="/" class="brand-logo nb"><i class="material-icons"></i>My Bookshelf</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li v-if="!user"><router-link :to="{name:'Login'}">Log In</router-link></li>
-        <li><router-link :to="{name:'Search'}"><i class="material-icons">search</i></router-link></li>
-        <li v-if="user"><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
-        <li v-if="user"><a @click="logout">Log Out</a></li>
-      </ul>
-    </div>
-      <ul class="sidenav" id="mobile-demo">
-        <li v-if="!user"><router-link :to="{name:'Login'}">Log In</router-link></li>
-        <li><router-link :to="{name:'Search'}">Search</router-link></li>
-        <li v-if="user"><router-link :to="{name:'AddBook'}">Add Book</router-link></li>
-        <li v-if="user"><a @click="logout">Log Out</a></li>
-    </ul>
-  </nav>
+ <v-container class="grey lighten-5">
+<v-app-bar class="grey lighten-5" flat app >
+          <v-app-bar-nav-icon @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon>
+        <v-toolbar-title class="text-uppercase">
+          <span class="font-weight-light">Kevin's </span>
+          <span>Bookshelf</span>
+        </v-toolbar-title>
+               <!-- <span class="text-uppercase">Total Books: <b>{{ searchResults.length }}</b></span> -->
+        <v-spacer></v-spacer>
+        <v-text-field v-model="searchText" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+        <v-spacer></v-spacer>
+        
+      </v-app-bar>
+          <v-navigation-drawer app v-model="drawer" class="primary">
+      <v-list>
+              </v-list>
+    </v-navigation-drawer>
+ </v-container>
 </template>
 
 <script>
-import M from 'materialize-css'
+
 import firebase from 'firebase'
 export default {
     name: 'Navbar',
@@ -41,15 +41,9 @@ export default {
             if (user){this.user = user}
             else{this.user = null}
         })
-     },
-     mounted(){
-       M.AutoInit()
      }
 }
 </script>
 
 <style>
-.nb{
-  left:50px
-}
 </style>

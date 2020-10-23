@@ -58,7 +58,6 @@
 <script>
 import db from '@/firebase/init'
 import firebase from 'firebase'
-import M from 'materialize-css'
 export default {
     Name: 'EditBook',
     data(){

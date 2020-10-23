@@ -16,7 +16,7 @@ db.collection('Bookshelf').get()
   })
 
 
-export const store = new Vuex.Store({
+  export default new Vuex.Store({
   state: {
     books
   }
