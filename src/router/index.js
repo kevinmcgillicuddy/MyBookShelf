@@ -1,48 +1,47 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import Shelf from '@/components/Shelf'
+import VueRouter from 'vue-router'
+import Shelf from '../views/Shelf.vue'
 import Login from '@/components/Login'
 import AddBook from '@/components/AddBook'
 import EditBook from '@/components/EditBook'
-import Search from '@/components/Search'
 import firebase from 'firebase'
+Vue.use(VueRouter)
 
-Vue.use(Router)
-
-const router = new Router({
-  routes: [
+const routes = [
+  {
+    path: '/',
+    name: 'Shelf',
+    component: Shelf
+  },
+  {
+    path: '/Login',
+    name: 'Login',
+    component: Login
+  },
     {
-      path: '/',
-      name: 'Shelf',
-      component: Shelf
-    },
-    {
-      path: '/Search',
-      name: 'Search',
-      component: Search
-    },
-    {
-      path: '/Login',
-      name: 'Login',
-      component: Login
-    },
-      {
-      path: '/AddBook',
-      name: 'AddBook',
-      component: AddBook,
-      meta:{
-        requiresAuth: true
-      }
-    },
-    {
-      path: '/EditBook/:id',
-      name: 'EditBook',
-      component: EditBook,
-      meta:{
-        requiresAuth: true
-      }
+    path: '/AddBook',
+    name: 'AddBook',
+    component: AddBook,
+    meta:{
+      requiresAuth: true
     }
-  ]
+  },
+  {
+    path: '/EditBook/:id',
+    name: 'EditBook',
+    component: EditBook,
+    meta:{
+      requiresAuth: true
+    }
+  }
+]
+
+
+
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
 
 router.beforeEach((to,from,next)=>{
@@ -58,4 +57,5 @@ router.beforeEach((to,from,next)=>{
     next()
   }
 })
+
 export default router

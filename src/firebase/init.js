@@ -1,4 +1,4 @@
-import firebase from 'firebase/app';
+const firebase = require('firebase/app');
 var config = {
     apiKey: "AIzaSyAMe_GatQ9EqTthbKG5pg-_I6Yc5xnMEKM",
     authDomain: "my-bookshelf-d9b0e.firebaseapp.com",
@@ -10,5 +10,10 @@ var config = {
     measurementId: "G-3CVLKJ7TEK"
 };
 const firebaseApp = firebase.initializeApp(config);
-export default firebaseApp.firestore()
 firebaseApp.analytics();
+export default firebaseApp.firestore()
+export const firestore = firebaseApp.firestore()
+export const auth = firebaseApp.auth()
+
+
+
