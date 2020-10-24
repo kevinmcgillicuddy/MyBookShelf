@@ -93,8 +93,6 @@
 </template>
 <script>
 import { mapGetters } from "vuex";
-// import db from "@/firebase/init";
-// import auth from "@/firebase/init.js";
 import firebase from "firebase";
 export default {
   name: "Shelf",
@@ -106,9 +104,9 @@ export default {
   },
   methods: {
     logout() {
-      // firebase.auth().signOut().then(()=>{
-      //    this.$router.push({name:'/'})
-      // })
+      firebase.auth().signOut().then(()=>{
+         this.$router.push({name:'/'})
+      })
     },
   },
   mounted() {},

@@ -1,18 +1,22 @@
 <template>
-  <v-container class="grey lighten-5">
-    <form @submit.prevent="login">
-      <v-text-field v-model="email" label="Email" required></v-text-field>
-      <v-text-field
-        v-model="password"
-        type="password"
-        label="Password"
-        required
-      ></v-text-field>
-      <v-btn class="mr-4" type="submit">Login</v-btn>
-    </form>
-    <br />
-    <p v-if="feedback" class="red--text">{{ feedback }}</p>
-  </v-container>
+  <center>
+    <v-card shaped elevation="24" max-width="600">
+      <v-container class="grey lighten-5">
+        <form @submit.prevent="login">
+          <v-text-field v-model="email" label="Email" required></v-text-field>
+          <v-text-field
+            v-model="password"
+            type="password"
+            label="Password"
+            required
+          ></v-text-field>
+          <v-btn class="mr-4" type="submit">Login</v-btn>
+        </form>
+        <br />
+        <p v-if="feedback" class="red--text">{{ feedback }}</p>
+      </v-container>
+    </v-card>
+  </center>
 </template>
 
 <script>
