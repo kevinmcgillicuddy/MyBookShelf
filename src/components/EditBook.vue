@@ -1,7 +1,7 @@
 <template>
   <v-container class="grey lighten-5">
     <h2 class="center-align indigo-text">Edit Book</h2>
-    <form @submit.prevent="addBook">
+    <form @submit.prevent="editBook">
       <v-text-field v-model="Book.Title" label="Title:" required></v-text-field>
       <v-text-field
         v-model="Book.Author"
