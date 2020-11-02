@@ -68,6 +68,7 @@ export default {
             this.Author = null;
             this.Title = null;
             this.Category = null;
+            this.$router.push({ name: "Shelf" })
           });
         this.feedback = null;
       } else {

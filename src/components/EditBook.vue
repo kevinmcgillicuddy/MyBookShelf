@@ -2,7 +2,7 @@
   <v-container class="grey lighten-5">
     <h2 class="center-align indigo-text">Edit Book</h2>
     <form @submit.prevent="editBook">
-      <v-text-field v-model="Book.Title" label="Title:" required></v-text-field>
+      <v-text-field v-model="Book.Title" type="Title" label="Title:" required></v-text-field>
       <v-text-field
         v-model="Book.Author"
         type="Author"
@@ -52,7 +52,8 @@ export default {
     editBook() {
       if (this.Book.Title && this.Book.Author) {
         this.feedback = null;
-        firestore.collection("Bookshelf")
+        firestore
+          .collection("Bookshelf")
           .doc(this.$route.params.id)
           .update({
             Title: this.Book.Title,
@@ -69,14 +70,14 @@ export default {
       }
     },
     deleteBook() {
-      firestore.collection("Bookshelf")
+      firestore
+        .collection("Bookshelf")
         .doc(this.$route.params.id)
         .delete()
         .then(() => this.$router.push({ name: "Shelf" }));
     },
-  }
-}
+  },
+};
 </script>
 <style>
-
 </style>
