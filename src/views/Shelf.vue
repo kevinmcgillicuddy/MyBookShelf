@@ -1,22 +1,24 @@
 <template>
-  <v-container class="grey lighten-5">
-    <v-app-bar class="grey lighten-5" flat app>
-      <!-- <v-app-bar-nav-icon @click="drawer = !drawer" class="grey--text"></v-app-bar-nav-icon> -->
-      <v-toolbar-title class="text-uppercase">
-        <span class="font-weight-light">Kevin's </span>
-        <span>Bookshelf</span>
-      </v-toolbar-title>
-     
-      <v-spacer></v-spacer>
-      <v-text-field
-        v-model="searchText"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
-      <v-spacer></v-spacer>
-       <span class="text-uppercase">Total Books: <b>{{ searchResults.length }}</b></span>
+  <v-container >
+    <v-app-bar class="grey lighten-4" flat app>
+      <v-row no-gutters style="margin-bottom: 5px; margin-top: 15px">
+        <v-col cols="12" sm="6">
+          <v-toolbar-title class="text-uppercase">
+            <span class="font-weight-light">Kevin's </span>
+            <span>Bookshelf</span>
+          </v-toolbar-title>
+        </v-col>
+        <v-col cols="11" lg="4" sm="6">
+          <v-text-field
+            v-model="searchText"
+            placeholder="Enter Author or Title"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
     </v-app-bar>
     <v-navigation-drawer
       app
@@ -25,30 +27,40 @@
       permanent
       expand-on-hover
     >
-        <v-list-item>
-          <v-list-item-icon>
-            <v-icon>mdi-home</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Home</v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="!user.loggedIn" :to="'Login'">
-          <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Login</v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="user.loggedIn" :to="'AddBook'">
-          <v-list-item-icon>
-            <v-icon>mdi-book-plus</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Add Book</v-list-item-title>
-        </v-list-item>
-        <v-list-item v-if="user.loggedIn">
-          <v-list-item-icon>
-            <v-icon>mdi-account-arrow-left</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title link @click="logout">Logout</v-list-item-title>
-        </v-list-item>
+      <v-list-item>
+        <v-list-item-icon>
+          <v-icon>mdi-home</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Home</v-list-item-title>
+      </v-list-item>
+      <v-list-item v-if="!user.loggedIn" :to="'Login'">
+        <v-list-item-icon>
+          <v-icon>mdi-account</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Login</v-list-item-title>
+      </v-list-item>
+      <v-list-item v-if="user.loggedIn" :to="'AddBook'">
+        <v-list-item-icon>
+          <v-icon>mdi-book-plus</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Add Book</v-list-item-title>
+      </v-list-item>
+      <v-list-item v-if="user.loggedIn">
+        <v-list-item-icon>
+          <v-icon>mdi-account-arrow-left</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title link @click="logout">Logout</v-list-item-title>
+      </v-list-item>
+      <v-list-item>
+        <v-list-item-icon>
+          <v-icon>mdi-bookmark-multiple </v-icon>
+        </v-list-item-icon>
+        <v-list-item-title
+          ><span class="text-uppercase"
+            >Total Books: <b>{{ searchResults.length }}</b></span
+          ></v-list-item-title
+        >
+      </v-list-item>
     </v-navigation-drawer>
     <br />
     <v-row align-content:stretch>
@@ -81,7 +93,7 @@
                 color="accent"
                 outlined
                 class="v-btn--example"
-                :to="{name:'EditBook', params:{id:book.id}}"
+                :to="{ name: 'EditBook', params: { id: book.id } }"
                 ><v-icon>mdi-pencil</v-icon></v-btn
               >
             </v-fab-transition>
@@ -104,9 +116,12 @@ export default {
   },
   methods: {
     logout() {
-      firebase.auth().signOut().then(()=>{
-         this.$router.push({name:'/'})
-      })
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: "/" });
+        });
     },
   },
   mounted() {},
@@ -130,5 +145,6 @@ export default {
   },
 };
 </script>
-<style >
+<style>
+
 </style>
