@@ -1,15 +1,8 @@
 <template>
-  <v-container >
-    <v-app-bar class="grey lighten-4" flat app>
-      <v-row no-gutters style="margin-bottom: 5px; margin-top: 15px">
-        <v-col cols="12" sm="6">
-          <v-toolbar-title class="text-uppercase">
-            <span class="font-weight-light">Kevin's </span>
-            <span>Bookshelf</span>
-          </v-toolbar-title>
-        </v-col>
-        <v-col cols="11" lg="4" sm="6">
-          <v-text-field
+    <v-container>
+    <center>
+    <div style="width:350px; margin-bottom:20px;">
+    <v-text-field
             v-model="searchText"
             placeholder="Enter Author or Title"
             append-icon="mdi-magnify"
@@ -17,72 +10,25 @@
             single-line
             hide-details
           ></v-text-field>
-        </v-col>
-      </v-row>
-    </v-app-bar>
-    <v-navigation-drawer
-      app
-      v-model="drawer"
-      class="primary"
-      permanent
-      expand-on-hover
-    >
-      <v-list-item>
-        <v-list-item-icon>
-          <v-icon>mdi-home</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>Home</v-list-item-title>
-      </v-list-item>
-      <v-list-item v-if="!user.loggedIn" :to="'Login'">
-        <v-list-item-icon>
-          <v-icon>mdi-account</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>Login</v-list-item-title>
-      </v-list-item>
-      <v-list-item v-if="user.loggedIn" :to="'AddBook'">
-        <v-list-item-icon>
-          <v-icon>mdi-book-plus</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title>Add Book</v-list-item-title>
-      </v-list-item>
-      <v-list-item v-if="user.loggedIn">
-        <v-list-item-icon>
-          <v-icon>mdi-account-arrow-left</v-icon>
-        </v-list-item-icon>
-        <v-list-item-title link @click="logout">Logout</v-list-item-title>
-      </v-list-item>
-      <v-list-item>
-        <v-list-item-icon>
-          <v-icon>mdi-bookmark-multiple </v-icon>
-        </v-list-item-icon>
-        <v-list-item-title
-          ><span class="text-uppercase"
-            >Total Books: <b>{{ searchResults.length }}</b></span
-          ></v-list-item-title
-        >
-      </v-list-item>
-    </v-navigation-drawer>
-    <br />
-    <v-row align-content:stretch>
-      <v-col v-for="book in searchResults" :key="book.id" cols="12" sm="3">
-        <v-card class="mx-auto" min-height="250" outlined shaped elevation="24">
-          <v-card-text>
-            <div>Title:</div>
-            <p class="display-1 text--primary">{{ book.Title }}</p>
-            <p>Author:</p>
-            <div class="text--primary">
-              <b>{{ book.Author }}</b>
-            </div>
-          </v-card-text>
+          </div>
+          </center>
+           <v-spacer></v-spacer>
+    <v-row>
+      <v-col v-for="book in searchResults" :key="book.id" col="4">
+        
+        <v-card class="mx-auto" height="170" width="300" outlined  elevation="5">
+           <v-card-title><div style="width: 225px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ book.Title }}</div></v-card-title>
+           <v-card-text>{{ book.Author }}</v-card-text>
+          <v-spacer></v-spacer>
+
           <v-card-actions>
-            <v-chip color="blue" v-if="book.Owned" text-color="white"
-              >Owned</v-chip
-            >
-            <v-chip color="green" v-else text-color="white">Read</v-chip>
-            <v-chip color="red" v-if="book.Loan" text-color="white"
-              >On Loan</v-chip
-            >
+       
+            <v-chip color="blue" v-if="book.Owned" text-color="white" class="chip">Owned</v-chip>
+            <v-chip color="green" v-else text-color="white" class="chip">Read</v-chip>
+            <v-chip color="red" v-if="book.Loan" text-color="white" class="chip">On Loan</v-chip>
+       
             <v-spacer></v-spacer>
+
             <v-fab-transition>
               <v-btn
                 v-if="user.loggedIn"
@@ -94,10 +40,10 @@
                 outlined
                 class="v-btn--example"
                 :to="{ name: 'EditBook', params: { id: book.id } }"
-                ><v-icon>mdi-pencil</v-icon></v-btn
-              >
+                ><v-icon>mdi-pencil</v-icon></v-btn>
             </v-fab-transition>
           </v-card-actions>
+
         </v-card>
       </v-col>
     </v-row>
@@ -146,5 +92,9 @@ export default {
 };
 </script>
 <style>
+.chip{
+  margin-right:7px;
+}
+
 
 </style>
