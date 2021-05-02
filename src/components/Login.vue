@@ -1,6 +1,6 @@
 <template>
   <center>
-    <v-card shaped elevation="24" max-width="600">
+    <v-card elevation="24" max-width="400">
       <v-container class="grey lighten-5">
         <form @submit.prevent="login">
           <v-text-field v-model="email" label="Email" required></v-text-field>
