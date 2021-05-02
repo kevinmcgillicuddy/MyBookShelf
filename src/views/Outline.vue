@@ -67,6 +67,16 @@ export default {
       drawer: false,
     };
   },
+  method:{
+     logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+          this.$router.push({ name: "/" });
+        });
+    }
+  },
   computed: {
     totalBooks() {
       return this.$store.state.books;

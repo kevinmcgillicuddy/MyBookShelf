@@ -17,7 +17,18 @@
       <v-col v-for="book in searchResults" :key="book.id" col="4">
         
         <v-card class="mx-auto" height="170" width="300" outlined  elevation="5">
-           <v-card-title><div style="width: 225px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{ book.Title }}</div></v-card-title>
+
+          <template>
+            <v-tooltip bottom :disabled="book.Title.length < 21" >
+              <template v-slot:activator="{ on }">
+                  <v-card-title>
+                    <span v-on="on" class="title">{{ book.Title }}</span>
+                  </v-card-title>
+              </template>
+              <span>{{ book.Title }}</span>
+            </v-tooltip>
+           </template>
+
            <v-card-text>{{ book.Author }}</v-card-text>
           <v-spacer></v-spacer>
 
@@ -60,18 +71,6 @@ export default {
       drawer: false,
     };
   },
-  methods: {
-    logout() {
-      firebase
-        .auth()
-        .signOut()
-        .then(() => {
-          this.$router.push({ name: "/" });
-        });
-    },
-  },
-  mounted() {},
-  created() {},
   computed: {
     searchResults() {
       if (this.searchText.length === 0) return this.$store.state.books;
@@ -94,6 +93,12 @@ export default {
 <style>
 .chip{
   margin-right:7px;
+}
+.title{
+  width: 225px; 
+  overflow: hidden; 
+  text-overflow: ellipsis; 
+  white-space: nowrap;
 }
 
 
