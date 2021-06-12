@@ -16,6 +16,7 @@
         <p v-if="feedback" class="red--text">{{ feedback }}</p>
       </v-container>
     </v-card>
+    <highcharts :options="chartOptions"></highcharts>
   </center>
 </template>
 
@@ -28,6 +29,15 @@ export default {
       feedback: null,
       password: null,
       email: null,
+       chartOptions: {
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar']
+          },
+        series: [{
+          type: 'column',
+          data: [1980,2891,3378]
+        }]
+      }
     };
   },
   methods: {

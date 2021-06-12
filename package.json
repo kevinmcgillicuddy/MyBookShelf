@@ -9,6 +9,8 @@
   "dependencies": {
     "core-js": "^3.8.1",
     "firebase": "^7.24.0",
+    "highcharts": "^9.1.1",
+    "highcharts-vue": "^1.4.0",
     "vue": "^2.6.11",
     "vue-router": "^3.4.9",
     "vuetify": "^2.4.0",

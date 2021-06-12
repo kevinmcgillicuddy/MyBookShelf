@@ -55,6 +55,13 @@
           ></v-list-item-title>
       </v-list-item>
 
+      <v-list-item :to="'Charts'">
+        <v-list-item-icon>
+          <v-icon>mdi-bookmark-multiple </v-icon>
+        </v-list-item-icon>
+        <v-list-item-title >CHARTS</v-list-item-title>
+      </v-list-item>
+
     </v-navigation-drawer>
       </v-container >
       </template>
@@ -84,6 +91,7 @@ export default {
     // map `this.user` to `this.$store.getters.user`
     ...mapGetters({
       user: "user",
+      book: "book"
     }),
   },
 };

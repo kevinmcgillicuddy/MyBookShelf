@@ -4,14 +4,22 @@ import firestore from '@/firebase/init'
 
 
 Vue.use(Vuex);
-let books = []
+let books = [];
+let YearBooks = [];
 
-firestore.collection('Bookshelf').get()
-  .then(snapshot => {
-    snapshot.forEach(book => {
+firestore.collection('Bookshelf').get().then(snapshot => {
+  snapshot.forEach(book => {
+      
       let b = book.data()
       b.id = book.id
       books.push(b)
+   
+      
+      switch (b.date_read){
+        case '2003':
+          YearBooks[0]
+          break
+      }
     });
   })
 
@@ -27,6 +35,9 @@ firestore.collection('Bookshelf').get()
   getters: {
     user(state){
       return state.user
+    },
+    book(){
+      return this.book
     }
   },
   mutations: {
