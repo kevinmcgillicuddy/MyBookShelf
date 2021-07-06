@@ -19,6 +19,24 @@
         label="Category [Novels, Non Fiction, Theology]:"
         required
       ></v-text-field>
+        <v-text-field
+        v-model="Pages"
+        type="Pages"
+        label="Pages"
+        required
+      ></v-text-field>
+        <v-text-field
+        v-model="ISBN"
+        type="ISBN"
+        label="ISBN"
+        required
+      ></v-text-field>
+        <v-text-field
+        v-model="DateRead"
+        type="Year Read"
+        label="Year Read"
+        required
+      ></v-text-field>
       <v-checkbox
       v-model="Owned"
       :label="`Owned`"
@@ -50,6 +68,9 @@ export default {
       feedback: null,
       ReadingNow: false,
       Title: null,
+      DateRead:null,
+      Pages:null,
+      ISBN:null
     };
   },
   methods: {
@@ -63,11 +84,17 @@ export default {
             Owned: this.Owned,
             Loan: this.Loan,
             Category: this.Category,
+            year_read: this.DateRead,
+            pages: this.Pages,
+            isbn: this.ISBN
+
           })
           .then(() => {
             this.Author = null;
             this.Title = null;
             this.Category = null;
+            this.ISBN = null;
+            this.Pages = null;
             this.$router.push({ name: "Shelf" })
           });
         this.feedback = null;
