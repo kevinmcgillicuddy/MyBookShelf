@@ -1,43 +1,63 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import firestore from '@/firebase/init'
-
+import firestore from '@/firebase/init';
 
 Vue.use(Vuex);
 let books = [];
-let YearBooks = [];
+let years = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+let chartDataPages = [];
+let chartDataBooks = [];
 
-firestore.collection('Bookshelf').get().then(snapshot => {
-  snapshot.forEach(book => {
-      
+async function getPages(year) {
+  let pagesRead = 0;
+
+  let firestoreRef = firestore.collection('Bookshelf').where("year_read", "==", year);
+  let allBooks = await firestoreRef.get();
+
+  let numBooks = allBooks.docs.length
+  chartDataBooks.push(numBooks)
+
+  for (const doc of allBooks.docs) {
+    pagesRead += parseInt(doc.data().pages)
+  }
+  return pagesRead;
+}
+
+async function populateData(years) {
+
+  for (const elem of years) {
+    let insertResponse = await getPages(parseInt(elem))
+    chartDataPages.push(insertResponse)
+  }
+  return chartDataPages;
+}
+
+populateData(years).then(res => console.log(res));
+
+
+firestore.collection('Bookshelf').get()
+  .then(snapshot => {
+    snapshot.forEach(book => {
       let b = book.data()
       b.id = book.id
       books.push(b)
-   
-      
-      switch (b.date_read){
-        case '2003':
-          YearBooks[0]
-          break
-      }
     });
   })
 
 
-  export default new Vuex.Store({
+export default new Vuex.Store({
   state: {
     books,
+    chartDataPages,
+    chartDataBooks,
     user: {
       loggedIn: false,
       data: null
     }
   },
   getters: {
-    user(state){
+    user(state) {
       return state.user
-    },
-    book(){
-      return this.book
     }
   },
   mutations: {
