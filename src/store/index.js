@@ -4,24 +4,59 @@ import firestore from '@/firebase/init';
 
 Vue.use(Vuex);
 let books = [];
+
 let years = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+let categories = [1,2,3];
+
 let chartDataPages = [];
 let chartDataBooks = [];
 
-async function getPages(year) {
-  let pagesRead = 0;
 
-  let firestoreRef = firestore.collection('Bookshelf').where("year_read", "==", year);
-  let allBooks = await firestoreRef.get();
-
-  let numBooks = allBooks.docs.length
-  chartDataBooks.push(numBooks)
-
-  for (const doc of allBooks.docs) {
-    pagesRead += parseInt(doc.data().pages)
-  }
-  return pagesRead;
+async function getAllBooks(){
+ await  firestore.collection('Bookshelf').get()
+  .then(snapshot => {
+    snapshot.forEach(book => {
+      let b = book.data()
+      b.id = book.id
+      books.push(b)
+    });
+  })
 }
+
+async function getPagesPerYear(year){
+  let pagesRead = 0;
+  await getAllBooks()
+  for (const book of books){
+    if (book.year == year){
+      pagesRead += parseInt(book.pages)
+    }
+    return pagesRead;
+  }
+}
+
+async function getBooksPerYear(year){
+  let booksRead = 0;
+  for (const book of books){
+    if (book.year == year){
+      booksRead += parseInt(book.id)
+    }
+    return booksRead;
+  }
+}
+// async function getPages(year) {
+//   let pagesRead = 0;
+
+//   let firestoreRef = firestore.collection('Bookshelf').where("year_read", "==", year);
+//   let allBooks = await firestoreRef.get();
+
+//   let numBooks = allBooks.docs.length
+//   chartDataBooks.push(numBooks)
+
+//   for (const doc of allBooks.docs) {
+//     pagesRead += parseInt(doc.data().pages)
+//   }
+//   return pagesRead;
+// }
 
 async function populateData(years) {
 
@@ -32,17 +67,10 @@ async function populateData(years) {
   return chartDataPages;
 }
 
-populateData(years).then(res => console.log(res));
+// populateData(years)
+getPagesPerYear(2006).then(res => console.log(res));
 
 
-firestore.collection('Bookshelf').get()
-  .then(snapshot => {
-    snapshot.forEach(book => {
-      let b = book.data()
-      b.id = book.id
-      books.push(b)
-    });
-  })
 
 
 export default new Vuex.Store({
