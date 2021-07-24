@@ -16,6 +16,8 @@
         <p v-if="feedback" class="red--text">{{ feedback }}</p>
       </v-container>
     </v-card>
+         <highcharts :options="lineNumPagesOpt"></highcharts>
+    <highcharts :options="columnNumBookOpt"></highcharts>
   </center>
 </template>
 
@@ -28,6 +30,33 @@ export default {
       feedback: null,
       password: null,
       email: null,
+       lineNumPagesOpt: {
+        title: {
+        text: 'Pages read per year'
+          },
+        xAxis: {
+          categories: ['2006', '2007', '2008', '2009', '2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021']
+          },
+        series: [{
+          name: 'Number of Pages',
+          type: 'line',
+          data: this.$store.state.chartDataPagesPerYear
+        }]
+      },
+    columnNumBookOpt: {
+        title: {
+        text: 'Books read per year'
+          },
+        xAxis: {
+          categories: ['2006', '2007', '2008', '2009', '2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021']
+          },
+        series: [{
+          name: 'Number of Books',
+          type: 'column',
+          data: this.$store.state.chartDataBooksPerYear
+        }]
+      }
+    
     }
   },
   methods: {

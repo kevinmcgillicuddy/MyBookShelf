@@ -8,8 +8,8 @@ let books = [];
 let years = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
 let categories = [1,2,3];
 
-let chartDataPages = [];
-let chartDataBooks = [];
+let chartDataPagesPerYear = [];
+let chartDataBooksPerYear = [];
 
 
 async function getAllBooks(){
@@ -23,61 +23,67 @@ async function getAllBooks(){
   })
 }
 
-async function getPagesPerYear(year){
-  let pagesRead = 0;
-  await getAllBooks()
-  for (const book of books){
-    if (book.year == year){
-      pagesRead += parseInt(book.pages)
-    }
-    return pagesRead;
-  }
-}
-
-async function getBooksPerYear(year){
-  let booksRead = 0;
-  for (const book of books){
-    if (book.year == year){
-      booksRead += parseInt(book.id)
-    }
-    return booksRead;
-  }
-}
-// async function getPages(year) {
+// async function getPagesPerYear(year){
 //   let pagesRead = 0;
-
-//   let firestoreRef = firestore.collection('Bookshelf').where("year_read", "==", year);
-//   let allBooks = await firestoreRef.get();
-
-//   let numBooks = allBooks.docs.length
-//   chartDataBooks.push(numBooks)
-
-//   for (const doc of allBooks.docs) {
-//     pagesRead += parseInt(doc.data().pages)
+//   for (const book of books){
+//     console.log(book.pages)
+//     if (book.date_read == year){
+//       pagesRead += parseInt(book.pages)
+//     }
+//     return pagesRead;
 //   }
-//   return pagesRead;
 // }
+
+// async function getBooksPerYear(year){
+//   let booksRead = 0;
+//   for (const book of books){
+//     if (book.year == year){
+//       booksRead += parseInt(book.id)
+//     }
+//     return booksRead;
+//   }
+// }
+
 
 async function populateData(years) {
 
-  for (const elem of years) {
-    let insertResponse = await getPages(parseInt(elem))
-    chartDataPages.push(insertResponse)
+  await getAllBooks();
+  let pagesRead = 0;
+  let booksRead = 0;
+  const addArrayItems = (accumulator, currentValue) => accumulator + currentValue;
+
+  for (const year of years) {
+    let BooksPerYearResponse = books.filter(book => book.year_read == parseInt(year));
+    // console.log(BooksPerYearResponse)
+    chartDataBooksPerYear.push(BooksPerYearResponse.length)
+
+
+    let result = books.flatMap(a => parseInt(a.year_read));
+    console.log(result)
+    let PagesPerYearResponse = books.filter(book => book.year_read == parseInt(year));
+    // console.log(PagesPerYearResponse)
+    // console.log(PagesPerYearResponse.reduce(addArrayItems))
+    chartDataPagesPerYear.push(PagesPerYearResponse.reduce(addArrayItems))
+
+    // console.log(chartDataPagesPerYear)
+    // PagesPerYearResponse = books.filter(book=>)
+    // let PagesPerYearResponse = await getPagesPerYear(parseInt(year))
+    // chartDataPagesPerYear.push(PagesPerYearResponse)
+    // let BooksPerYearResponse = await getBooksPerYear(parseInt(year))
+    // chartDataBooksPerYear.push(BooksPerYearResponse)
   }
-  return chartDataPages;
 }
 
-// populateData(years)
-getPagesPerYear(2006).then(res => console.log(res));
-
+populateData(years).then(d=>console.log(d))
+// getAllBooks()
 
 
 
 export default new Vuex.Store({
   state: {
     books,
-    chartDataPages,
-    chartDataBooks,
+    chartDataPagesPerYear,
+    chartDataBooksPerYear,
     user: {
       loggedIn: false,
       data: null

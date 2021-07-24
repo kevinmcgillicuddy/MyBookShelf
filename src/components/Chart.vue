@@ -1,16 +1,16 @@
 <template>
-  <center>
+<div>
+<b>BLah</b>
     <v-card  class="mx-auto" max-width="244">
    <v-card-title>Total Books Read</v-card-title>
     <v-card-text><p>text-h4 text--primary{{this.$store.state.books.length}}</p></v-card-text>
     </v-card>
-  
     <br />
     <v-divider></v-divider>
      <br />
-    <highcharts :options="lineNumPagesOpt"></highcharts>
+     <highcharts :options="lineNumPagesOpt"></highcharts>
     <highcharts :options="columnNumBookOpt"></highcharts>
-  </center>
+</div>
 </template>
 
 <script>
@@ -28,7 +28,7 @@ export default {
         series: [{
           name: 'Number of Pages',
           type: 'line',
-          data: this.$store.state.chartDataPages
+          data: this.$store.state.chartDataPagesPerYear
         }]
       },
     columnNumBookOpt: {
@@ -41,11 +41,12 @@ export default {
         series: [{
           name: 'Number of Books',
           type: 'column',
-          data: this.$store.state.chartDataBooks
+          data: this.$store.state.chartDataBooksPerYear
         }]
       }
     }
   },};
 </script>
 <style>
+
 </style>
