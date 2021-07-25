@@ -1,16 +1,15 @@
 <template>
-<div>
-<b>BLah</b>
+<center>
     <v-card  class="mx-auto" max-width="244">
    <v-card-title>Total Books Read</v-card-title>
-    <v-card-text><p>text-h4 text--primary{{this.$store.state.books.length}}</p></v-card-text>
+    <v-card-text><p class="text-h4 text--primary">{{this.$store.state.books.length}}</p></v-card-text>
     </v-card>
     <br />
     <v-divider></v-divider>
      <br />
      <highcharts :options="lineNumPagesOpt"></highcharts>
     <highcharts :options="columnNumBookOpt"></highcharts>
-</div>
+</center>
 </template>
 
 <script>

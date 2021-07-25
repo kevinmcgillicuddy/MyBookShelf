@@ -45,7 +45,7 @@
         <v-list-item-title link @click="logout">Logout</v-list-item-title>
       </v-list-item>
 
-      <v-list-item :to="'Charts'">
+      <v-list-item :to="'Chart'">
         <v-list-item-icon>
           <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
