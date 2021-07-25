@@ -32,7 +32,7 @@ export default {
       },
     columnNumBookOpt: {
         title: {
-        text: 'Pages read per year'
+        text: 'Books read per year'
           },
         xAxis: {
           categories: ['2006', '2007', '2008', '2009', '2010','2011','2012','2013','2014','2015','2016','2017','2018','2019','2020','2021']
