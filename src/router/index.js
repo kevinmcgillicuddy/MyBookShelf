@@ -4,6 +4,7 @@ import Shelf from '../views/Shelf.vue'
 import Login from '@/components/Login'
 import AddBook from '@/components/AddBook'
 import EditBook from '@/components/EditBook'
+import Chart from '@/components/Chart'
 import firebase from 'firebase'
 Vue.use(VueRouter)
 
@@ -12,6 +13,11 @@ const routes = [
     path: '/',
     name: 'Shelf',
     component: Shelf
+  },
+  {
+    path: '/Chart',
+    name: 'Chart',
+    component: Chart
   },
   {
     path: '/Login',

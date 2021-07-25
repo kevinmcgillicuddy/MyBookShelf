@@ -45,14 +45,11 @@
         <v-list-item-title link @click="logout">Logout</v-list-item-title>
       </v-list-item>
 
-      <v-list-item>
+      <v-list-item :to="'Charts'">
         <v-list-item-icon>
-          <v-icon>mdi-bookmark-multiple </v-icon>
+          <v-icon>mdi-chart-bar</v-icon>
         </v-list-item-icon>
-        <v-list-item-title
-          ><span class="text-uppercase"
-            >Total Books: <b>{{ totalBooks.length }}</b></span
-          ></v-list-item-title>
+        <v-list-item-title >Charts</v-list-item-title>
       </v-list-item>
 
     </v-navigation-drawer>
@@ -84,6 +81,7 @@ export default {
     // map `this.user` to `this.$store.getters.user`
     ...mapGetters({
       user: "user",
+      book: "book"
     }),
   },
 };

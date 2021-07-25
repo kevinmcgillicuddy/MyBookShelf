@@ -1,31 +1,66 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import firestore from '@/firebase/init'
-
+import firestore from '@/firebase/init';
 
 Vue.use(Vuex);
-let books = []
+let books = [];
 
-firestore.collection('Bookshelf').get()
-  .then(snapshot => {
-    snapshot.forEach(book => {
-      let b = book.data()
-      b.id = book.id
-      books.push(b)
-    });
-  })
+let years = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
+let categories = [1, 2, 3];
+
+let chartDataPagesPerYear = [];
+let chartDataBooksPerYear = [];
 
 
-  export default new Vuex.Store({
+async function getAllBooks() {
+  await firestore.collection('Bookshelf').get()
+    .then(snapshot => {
+      snapshot.forEach(book => {
+        let b = book.data()
+        b.id = book.id
+        books.push(b)
+      });
+    })
+}
+
+async function populateData(years) {
+
+  await getAllBooks();
+  
+  
+
+
+
+  const addArrayItems = (total, amount) => total + amount;
+
+  for (const year of years) {
+    let BooksPerYearResponse = books.filter(book => parseInt(book.year_read) == year);
+    chartDataBooksPerYear.push(BooksPerYearResponse.length)
+
+
+    let PagesPerYearFilter = books.filter(book => parseInt(book.year_read) == year)
+    let PagesPerYearMap = PagesPerYearFilter.map(book => parseInt(book.pages))
+    chartDataPagesPerYear.push(PagesPerYearMap.reduce(addArrayItems))
+  }
+
+  // books.forEach(book => yearToPageMap.set(book.year, yearToPageMap.has(book.year) ? yearToPageMap.get(book.year) + book.pages : book.pages));
+
+}
+
+populateData(years).then(d => console.log(d))
+
+export default new Vuex.Store({
   state: {
     books,
+    chartDataPagesPerYear,
+    chartDataBooksPerYear,
     user: {
       loggedIn: false,
       data: null
     }
   },
   getters: {
-    user(state){
+    user(state) {
       return state.user
     }
   },
