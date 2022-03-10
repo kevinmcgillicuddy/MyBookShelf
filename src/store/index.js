@@ -4,13 +4,9 @@ import firestore from '@/firebase/init';
 
 Vue.use(Vuex);
 let books = [];
-
-let years = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021];
-let categories = [1, 2, 3];
-
+let years = [2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
 let chartDataPagesPerYear = [];
 let chartDataBooksPerYear = [];
-
 
 async function getAllBooks() {
   await firestore.collection('Bookshelf').get()
@@ -26,11 +22,6 @@ async function getAllBooks() {
 async function populateData(years) {
 
   await getAllBooks();
-  
-  
-
-
-
   const addArrayItems = (total, amount) => total + amount;
 
   for (const year of years) {
@@ -42,9 +33,6 @@ async function populateData(years) {
     let PagesPerYearMap = PagesPerYearFilter.map(book => parseInt(book.pages))
     chartDataPagesPerYear.push(PagesPerYearMap.reduce(addArrayItems))
   }
-
-  // books.forEach(book => yearToPageMap.set(book.year, yearToPageMap.has(book.year) ? yearToPageMap.get(book.year) + book.pages : book.pages));
-
 }
 
 populateData(years).then(d => console.log(d))
