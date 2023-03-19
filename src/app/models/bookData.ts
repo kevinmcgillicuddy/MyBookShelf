@@ -8,4 +8,5 @@ export interface bookData {
   isbn: string;
   pages: number;
   year_read: number;
+  img_url?: string;
 }

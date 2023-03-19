@@ -3,9 +3,9 @@ import { bookData } from '../models/bookData';
 
 @Component({
   selector: 'app-book-card',
-  templateUrl: './book-card.component.html',
-  styleUrls: ['./book-card.component.scss']
+  templateUrl: './book-card.component.html'
 })
 export class BookCardComponent {
-@Input() book?: bookData[];
+  loadingArray = Array.from({ length: 6 });
+  @Input() books?: bookData[];
 }

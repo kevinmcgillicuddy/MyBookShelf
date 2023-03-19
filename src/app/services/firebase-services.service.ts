@@ -12,18 +12,9 @@ import { collection, query, orderBy, startAfter, limit, getDocs } from "firebase
 })
 export class FirebaseServicesService {
 
-  constructor(private readonly db:  AngularFirestore,private readonly firebaseApp: FirebaseApp) { }
-  public listVisible:any;
-
+  constructor(private readonly firebaseApp: FirebaseApp) { }
   getBooks(): Observable<DocumentData[]> {
-    return collectionData(query(collection(this.firebaseApp.firestore(), "Bookshelf"), orderBy("year_read", "desc"), limit(5))).pipe(
-      tap((data) => this.listVisible = data[data.length - 1])
-    )
-
-  }
-  getMoreBooks(){
-    console.log(this.listVisible)
-   return collectionData(query(collection(this.firebaseApp.firestore(), "Bookshelf"), orderBy("year_read", "desc"), startAfter(this.listVisible), limit(5)))
+    return collectionData(query(collection(this.firebaseApp.firestore(), "Bookshelf"), orderBy("year_read", "desc"), limit(5)))
   }
 }
 

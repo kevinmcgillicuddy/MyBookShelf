@@ -1,14 +1,33 @@
 <div>
-  <div *ngIf="stuff$ | async as stuff">
+  <div *ngIf="booksData$ | async as bookData">
+    <app-book-card [books]="bookData.result!"></app-book-card>
+    <!-- #region spinner -->
+    <div *ngIf="bookData.isProcessing">
+      <div class="flex items-center justify-center mb-4">
 
-    <app-book-card [book]="stuff"></app-book-card>
-    <div
-    class="search-results"
-    infiniteScroll
-    [infiniteScrollDistance]="2"
-    [infiniteScrollThrottle]="1000"
-    (scrolled)="onScroll()"
-  ></div>
-</div>
+        <div
+          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status">
+          <span
+            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+
+      </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region down arrow -->
+      <!-- #region infitescroll trigger -->
+      <div infiniteScroll [infiniteScrollDistance]="2" [infiniteScrollThrottle]="1000" (scrolled)="onScroll()"></div>
+  <!-- #endregion -->
+
+    <div class="mt-4 animate-bounce ml flex justify-center">
+      <svg class="animate-bounce w-6 h-6" width="24px" height="24px" viewBox="0 0 1024 1024" class="icon" version="1.1"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M903.232 256l56.768 50.432L512 768 64 306.432 120.768 256 512 659.072z" fill="#000000" />
+      </svg>
+    </div>
+    <!-- #endregion -->
+
+  </div>
 
 </div>
