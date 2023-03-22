@@ -63,7 +63,6 @@ export class AppComponent implements OnInit {
       limit(6));
   }
 
-
   getImgs(isbn: string): Observable<BookImg> {
     return this.http.get<BookImg>(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
   }
