@@ -8,12 +8,16 @@ import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BookCardComponent } from './book-card/book-card.component';
+import { BookHeaderComponent } from './book-header/book-header.component';
+import { BookViewComponent } from './book-view/book-view.component';
 
 @NgModule({
-  declarations: [
+  declarations: [		
     AppComponent,
-    BookCardComponent
-  ],
+    BookCardComponent,
+      BookHeaderComponent,
+      BookViewComponent
+   ],
   imports: [
     InfiniteScrollModule,
     BrowserModule,
