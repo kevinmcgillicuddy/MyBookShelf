@@ -1,0 +1,19 @@
+<div class="flex justify-center flex-wrap">
+  <div class="mb-4">
+    <ngx-charts-pie-chart *ngIf="categoryBreakDown$ | async as data; else loadingCategory" [results]="data"
+      [view]="[700, 400]" [legend]="true" [legendPosition]="legendPosition">
+    </ngx-charts-pie-chart>
+  </div>
+  <div>
+    <ngx-charts-bar-vertical *ngIf="yearBreakDown$ | async as data; else loadingYears" [view]="[700, 400]"
+      [legend]="true" [legendPosition]="legendPosition" [results]="data">
+    </ngx-charts-bar-vertical>
+  </div>
+</div>
+
+<ng-template #loadingCategory>
+  <div class="w-96 h-96 ml-auto mr-auto bg-gray-300 animate-pulse rounded-full "></div>
+</ng-template>
+<ng-template #loadingYears>
+  <div class="w-96 h-96 ml-auto mr-auto bg-gray-300 animate-pulse "></div>
+</ng-template>

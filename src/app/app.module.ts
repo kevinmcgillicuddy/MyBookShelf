@@ -10,16 +10,20 @@ import { AppComponent } from './app.component';
 import { BookCardComponent } from './book-card/book-card.component';
 import { BookHeaderComponent } from './book-header/book-header.component';
 import { BookViewComponent } from './book-view/book-view.component';
+import { BookChartComponent } from './book-chart/book-chart.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
-  declarations: [		
+  declarations: [
     AppComponent,
     BookCardComponent,
       BookHeaderComponent,
-      BookViewComponent
+      BookViewComponent,
+      BookChartComponent
    ],
   imports: [
     InfiniteScrollModule,
+    NgxChartsModule,
     BrowserModule,
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
