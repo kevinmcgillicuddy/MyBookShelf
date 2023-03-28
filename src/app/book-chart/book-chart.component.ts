@@ -30,31 +30,22 @@ export class BookChartComponent implements OnInit {
   }
 
   reduceBookDataToCounts(bookData: bookData[], sumBy: keyof bookData ): Count[] {
-
+    //generic function to reduce book data to counts
     const counts: { [key: string]: number } = {};
-
     for (const book of bookData) {
       const key = book[sumBy];
-      if (key !== undefined) {
+      if (key) {
+        //increment the count for the key if it exists on the counts object
         counts[key as string] = (counts[key as string] || 0) + 1;
       }
     }
-
     const result: Count[] = [];
     for (const value in counts) {
+      //push the key and value to the result array
       if (counts.hasOwnProperty(value)) {
         result.push({ name: value, value: counts[value] });
       }
     }
     return result;
   };
-
-  // function reduceBookDataToCounts(bookData: BookData[], sumBy: keyof BookData): Count[] {
-  //   const counts: { [key: string]: number } = {};
-  //   for (const book of bookData) {
-  //     const category = book[sumBy];
-  //     counts[category] = (counts[category] || 0) + 1;
-  //   }
-  //   return Object.keys(counts).map(category => ({ name: category, value: counts[category] }));
-  // }
 }
