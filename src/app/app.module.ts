@@ -12,7 +12,7 @@ import { BookHeaderComponent } from './book-header/book-header.component';
 import { BookViewComponent } from './book-view/book-view.component';
 import { BookChartComponent } from './book-chart/book-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,6 +26,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
     NgxChartsModule,
     BrowserModule,
     HttpClientModule,
+    BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     AppRoutingModule
