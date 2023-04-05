@@ -13,13 +13,15 @@ import { BookViewComponent } from './book-view/book-view.component';
 import { BookChartComponent } from './book-chart/book-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BookSearchComponent } from './book-search/book-search.component';
 @NgModule({
-  declarations: [
+  declarations: [	
     AppComponent,
     BookCardComponent,
       BookHeaderComponent,
       BookViewComponent,
-      BookChartComponent
+      BookChartComponent,
+      BookSearchComponent
    ],
   imports: [
     InfiniteScrollModule,

@@ -1,4 +1,4 @@
-export interface bookData {
+export interface BookData {
   Author: string;
   Category: string;
   Loan: boolean;

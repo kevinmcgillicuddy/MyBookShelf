@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { bookData } from '../models/bookData';
+import { BookData } from '../models/bookData';
 
 @Component({
   selector: 'app-book-card',
@@ -7,5 +7,5 @@ import { bookData } from '../models/bookData';
 })
 export class BookCardComponent {
   loadingArray = Array.from({ length: 6 });
-  @Input() books?: bookData[];
+  @Input() books?: BookData[];
 }
