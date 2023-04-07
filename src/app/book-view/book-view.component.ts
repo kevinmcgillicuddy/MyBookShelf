@@ -7,11 +7,13 @@ import { AngularFireService } from 'src/services/angular-fire.service';
 })
 export class BookViewComponent{
 
-  constructor(private angularFireService: AngularFireService) { }
+  constructor(private angularFireService: AngularFireService) {
+    this.angularFireService.getBookShelfData();
+  }
 
   public booksData$ = this.angularFireService.bookData$;
 
   async onScroll(): Promise<void> {
-    this.angularFireService.getMore();
+    this.angularFireService.getMoreShelfData();
   }
 }

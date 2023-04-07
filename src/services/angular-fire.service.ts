@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
-import { BehaviorSubject, firstValueFrom, forkJoin, map, Observable, OperatorFunction, scan, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, OperatorFunction, scan, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
 import { BookImg } from 'src/app/models/imgData';
 @Injectable({
@@ -21,15 +21,19 @@ export class AngularFireService {
 
   public bookData$ = this._booksData$.asObservable();
 
-  constructor(private http: HttpClient, private afs: AngularFirestore) {
-    //set the initial value when the service is called
-    this.mapAndUpdateBookData(this.generateCollection())
-  }
+  constructor(private http: HttpClient, private afs: AngularFirestore) { }
 
+  public getAllBooks(): Observable<BookData[]> {
+    return this.afs.collection<BookData>('Bookshelf').valueChanges();
+  }
+  //set the initial value when the service is called
+  public getBookShelfData(): void{
+        this.mapAndUpdateBookData(this.generateCollection())
+  }
   /**
-* This method is called by the implementing component to load more books into the behaviorSubject
-*  */
-  public getMore() {
+  * This method is called by the implementing component to load more books into the behaviorSubject
+  *  */
+  public getMoreShelfData():void {
     this.mapAndUpdateBookData(this.generateCollection(this._booksData$.value.cursor))
   }
 
@@ -38,7 +42,7 @@ export class AngularFireService {
  * The method accepts an optional QueryDocumentSnapshot object called 'cursor' which is used to specify
  * the starting point for the query. If no cursor is provided, the query starts from the beginning of the collection.
  *  */
-  private generateCollection(cursor?: QueryDocumentSnapshot<DocumentData>) {
+  private generateCollection(cursor?: QueryDocumentSnapshot<DocumentData>):AngularFirestoreCollection<BookData> {
     return this.afs.collection<BookData>('Bookshelf', ref => {
       return cursor ? ref.orderBy('year_read', 'desc').startAfter(cursor).limit(8) : ref.orderBy('year_read', 'desc').limit(8)
     })
@@ -86,10 +90,10 @@ export class AngularFireService {
 
           // Combine the Observables of BookImg objects into a single Observable using 'forkJoin'.
           return forkJoin(imgObservables).pipe(
-            // Map the original array of BookData objects to a new array that includes the URL of the book cover image.
+            // Map the original array of BookData objects to a new array that includes the URL of the book cover image or a default gray one.
             map((imgs: BookImg[]) => {
               return values.map((book, i) => {
-                return { ...book, img_url: imgs[i].items[0].volumeInfo.imageLinks.thumbnail };
+                return { ...book, img_url: imgs[i]?.items ? imgs[i]?.items[0]?.volumeInfo?.imageLinks?.thumbnail : '/assets/imgs/placeHolder.jpg' };
               });
             })
           );
