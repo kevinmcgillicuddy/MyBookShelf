@@ -14,8 +14,9 @@ import { BookChartComponent } from './book-chart/book-chart.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookSearchComponent } from './book-search/book-search.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     BookCardComponent,
       BookHeaderComponent,
@@ -26,6 +27,7 @@ import { BookSearchComponent } from './book-search/book-search.component';
   imports: [
     InfiniteScrollModule,
     NgxChartsModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     BrowserAnimationsModule,

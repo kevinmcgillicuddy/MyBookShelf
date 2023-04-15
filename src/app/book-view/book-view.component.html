@@ -1,6 +1,6 @@
 <div>
   <div *ngIf="booksData$ | async as bookData">
-    <app-book-card [books]="bookData.result!"></app-book-card>
+    <app-book-card [books]="bookData.result"></app-book-card>
     <!-- #region spinner -->
     <div *ngIf="bookData.isProcessing">
       <div class="flex items-center justify-center mb-4">

@@ -27,13 +27,13 @@ export class AngularFireService {
     return this.afs.collection<BookData>('Bookshelf').valueChanges();
   }
   //set the initial value when the service is called
-  public getBookShelfData(): void{
-        this.mapAndUpdateBookData(this.generateCollection())
+  public getBookShelfData(): void {
+    this.mapAndUpdateBookData(this.generateCollection())
   }
   /**
   * This method is called by the implementing component to load more books into the behaviorSubject
   *  */
-  public getMoreShelfData():void {
+  public getMoreShelfData(): void {
     this.mapAndUpdateBookData(this.generateCollection(this._booksData$.value.cursor))
   }
 
@@ -42,9 +42,9 @@ export class AngularFireService {
  * The method accepts an optional QueryDocumentSnapshot object called 'cursor' which is used to specify
  * the starting point for the query. If no cursor is provided, the query starts from the beginning of the collection.
  *  */
-  private generateCollection(cursor?: QueryDocumentSnapshot<DocumentData>):AngularFirestoreCollection<BookData> {
+  private generateCollection(cursor?: QueryDocumentSnapshot<DocumentData>): AngularFirestoreCollection<BookData> {
     return this.afs.collection<BookData>('Bookshelf', ref => {
-      return cursor ? ref.orderBy('year_read', 'desc').startAfter(cursor).limit(8) : ref.orderBy('year_read', 'desc').limit(8)
+      return cursor ? ref.orderBy('year_read','desc').startAfter(cursor).limit(8) : ref.orderBy('year_read', 'desc').limit(8)
     })
   }
 
