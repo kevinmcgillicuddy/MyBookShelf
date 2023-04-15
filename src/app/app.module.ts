@@ -15,6 +15,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BookSearchComponent } from './book-search/book-search.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxsModule } from '@ngxs/store';
+import { Books } from './state/books.state';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +31,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NgxChartsModule,
     ReactiveFormsModule,
     BrowserModule,
+    NgxsModule.forRoot([Books.BookState], {
+    }),
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),

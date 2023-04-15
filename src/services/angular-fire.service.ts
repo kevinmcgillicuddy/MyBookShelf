@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
+import { Store } from '@ngxs/store';
 import { BehaviorSubject, forkJoin, map, Observable, OperatorFunction, scan, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
 import { BookImg } from 'src/app/models/imgData';
+import { Books } from 'src/app/state/books.state';
 @Injectable({
   providedIn: 'root'
 })
@@ -21,10 +23,10 @@ export class AngularFireService {
 
   public bookData$ = this._booksData$.asObservable();
 
-  constructor(private http: HttpClient, private afs: AngularFirestore) { }
+  constructor(private http: HttpClient, private afs: AngularFirestore, private store: Store) { }
 
   public getAllBooks(): Observable<BookData[]> {
-    return this.afs.collection<BookData>('Bookshelf').valueChanges();
+    return !!this.store.selectSnapshot(Books.BookState.books)?.length ?  this.store.select(Books.BookState.books) : this.afs.collection<BookData>('Bookshelf').valueChanges().pipe(tap((data)=>{console.log('running');this.store.dispatch(new Books.SetBooks(data))}));
   }
   //set the initial value when the service is called
   public getBookShelfData(): void {
