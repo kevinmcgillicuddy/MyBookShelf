@@ -14,7 +14,6 @@ export class BookViewComponent{
   public booksData$ = this.angularFireService.bookData$;
 
   async onScroll(): Promise<void> {
-    console.log('scrolling')
     this.angularFireService.getMoreShelfData();
   }
 }
