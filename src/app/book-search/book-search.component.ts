@@ -17,9 +17,7 @@ export class BookSearchComponent {
     searchTerm: ['', Validators.required],
   });
   onSearch(): void {
-    this.angularFireService.getBookShelfData();
 
-  // public booksData$ =
     this.angularFireService.getAllBooks().pipe(
       filter(data => !!data),
       map((data) => {

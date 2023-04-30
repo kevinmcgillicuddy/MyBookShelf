@@ -26,7 +26,11 @@ export class AngularFireService {
   constructor(private http: HttpClient, private afs: AngularFirestore, private store: Store) { }
 
   public getAllBooks(): Observable<BookData[]> {
-    return !!this.store.selectSnapshot(Books.BookState.books)?.length ?  this.store.select(Books.BookState.books) : this.afs.collection<BookData>('Bookshelf').valueChanges().pipe(tap((data)=>{console.log('running');this.store.dispatch(new Books.SetBooks(data))}));
+    return !!this.store.selectSnapshot(Books.BookState.books)?.length ?
+    this.store.select(Books.BookState.books) :
+    this.afs.collection<BookData>('Bookshelf').valueChanges().pipe(
+          tap((data)=>{this.store.dispatch(new Books.SetBooks(data))}));
+
   }
   //set the initial value when the service is called
   public getBookShelfData(): void {
