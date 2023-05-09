@@ -12,12 +12,16 @@ export class BookSearchComponent {
 
   constructor(private readonly angularFireService: AngularFireService, private formBuilder: FormBuilder) { }
 
-  bookData$ = new BehaviorSubject<BookData[] | undefined>(undefined);
+  bookData$ = new BehaviorSubject<{
+    isProcessing?: boolean;
+    result?: BookData[]}>({
+      result:[]
+    });
   form: FormGroup<{ searchTerm: FormControl<string | null> }> = this.formBuilder.group({
     searchTerm: ['', Validators.required],
   });
   onSearch(): void {
-
+    this.bookData$.next({ isProcessing: true })
     this.angularFireService.getAllBooks().pipe(
       filter(data => !!data),
       map((data) => {
@@ -34,7 +38,10 @@ export class BookSearchComponent {
         });
       }))
       .subscribe((value) => {
-        this.bookData$.next(value);
+        this.bookData$.next({
+          result: value,
+          isProcessing: false
+        });
       });
   }
 }

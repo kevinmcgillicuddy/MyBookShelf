@@ -10,10 +10,8 @@
           placeholder="Search"
           aria-label="Search"
           aria-describedby="button-addon1" />
-
         </div>
-
-      </form>
+    </form>
       <button
         class="relative z-[2] flex items-center rounded-r bg-blue-300 px-6 py-2.5 text-xs font-medium uppercase leading-tight shadow-md transition duration-150 ease-in-out hover:bg-blue-500 hover:shadow-lg focus:bg-blue-500 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-6a00 active:shadow-lg"
         type="button"
@@ -35,9 +33,18 @@
       </button>
     </div>
   </div>
-
-
-  <div *ngIf="bookData$ | async as bookData">
-    <app-book-card [books]="bookData"></app-book-card>
-  </div>
 </div>
+
+
+  <div *ngIf="bookData$ | async as bookData">  <app-book-card [books]="bookData.result"></app-book-card>
+    <div *ngIf="bookData.isProcessing">
+      <div class="flex items-center justify-center mb-4">
+        <div
+          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status">
+          <span
+            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
