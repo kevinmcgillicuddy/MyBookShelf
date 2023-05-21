@@ -17,12 +17,15 @@ import { BookSearchComponent } from './book-search/book-search.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxsModule } from '@ngxs/store';
 import { Books } from './state/books.state';
+import {AngularFireAuthModule} from '@angular/fire/compat/auth';
+import { LoginComponent } from './admin/login/login.component';
 @NgModule({
   declarations: [
     AppComponent,
     BookCardComponent,
       BookHeaderComponent,
       BookViewComponent,
+      LoginComponent,
       BookChartComponent,
       BookSearchComponent
    ],
@@ -36,6 +39,7 @@ import { Books } from './state/books.state';
     HttpClientModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireAuthModule,
     AngularFirestoreModule,
     AppRoutingModule
   ],
