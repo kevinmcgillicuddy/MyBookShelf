@@ -9,4 +9,5 @@ export interface BookData {
   pages: number;
   year_read: number;
   img_url?: string;
+  fsId: string;
 }

@@ -4,6 +4,7 @@ import { BookChartComponent } from './book-chart/book-chart.component';
 import { BookSearchComponent } from './book-search/book-search.component';
 import { BookViewComponent } from './book-view/book-view.component';
 import { LoginComponent } from './admin/login/login.component';
+import { canActivateLogin } from './admin/login/login.guard';
 
 const routes: Routes = [{
   path: '',
@@ -15,7 +16,8 @@ const routes: Routes = [{
 },
 {
   path:'login',
-  component: LoginComponent
+  component: LoginComponent,
+  canActivate: [canActivateLogin],
  },
 {
   path:'search',

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, forkJoin, map, Observable, OperatorFunction, scan, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
 import { BookImg } from 'src/app/models/imgData';
 import { Books } from 'src/app/state/books.state';
@@ -26,11 +26,14 @@ export class AngularFireService {
   constructor(private http: HttpClient, private afs: AngularFirestore, private store: Store) { }
 
   public getAllBooks(): Observable<BookData[]> {
-    return !!this.store.selectSnapshot(Books.BookState.books)?.length ?
+    return this.store.selectSnapshot(Books.BookState.books)?.length ?
     this.store.select(Books.BookState.books) :
     this.afs.collection<BookData>('Bookshelf').valueChanges().pipe(
           tap((data)=>{this.store.dispatch(new Books.SetBooks(data))}));
+  }
 
+  getBookData(id: string): Observable<BookData | undefined> {
+    return this.afs.collection<BookData>('Bookshelf').doc<BookData>().valueChanges({ idField: 'isbn' });
   }
   //set the initial value when the service is called
   public getBookShelfData(): void {
@@ -89,7 +92,7 @@ export class AngularFireService {
           this._booksData$.next({ ...this._booksData$.value, cursor: arr[arr.length - 1].payload.doc })
 
           // Map the array of changes to an array of BookData objects.
-          const values = arr.map(snap => snap.payload.doc.data() as BookData)
+          const values = arr.map(snap => ({...snap.payload.doc.data(), fsId: snap.payload.doc.id, } as BookData))
 
           // Map each BookData object to an Observable of BookImg objects using the 'getImgs' method.
           const imgObservables = values.map(book => this.getImgs(book.isbn));

@@ -44,4 +44,11 @@ export class BookSearchComponent {
         });
       });
   }
+
+  onEditBook(index: BookData): void {
+    console.log('called')
+    this.angularFireService.getBookData(index.fsId).subscribe((data) => {
+      console.log(data)
+    });
+  }
 }
