@@ -9,6 +9,7 @@
       <a class="mr-5 hover:text-gray-900" [routerLink]="['/chart']">Metrics</a>
       <a class="mr-5 hover:text-gray-900" [routerLink]="['/search']">Search</a>
       <a *ngIf="(authState$ | async) === false" class="mr-5 hover:text-gray-900" [routerLink]="['/login']">Log In</a>
+      <a *ngIf="(authState$ | async) === true" class="mr-5 hover:text-gray-900" (click)="addBook()">Add Book</a>
       <a *ngIf="(authState$ | async) === true" class="mr-5 hover:text-gray-900" (click)="logout()">Log Out</a>
     </nav>
   </div>

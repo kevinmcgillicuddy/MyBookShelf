@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, forkJoin, map, Observable, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, concat, concatMap, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
 import { BookImg } from 'src/app/models/imgData';
 import { Books } from 'src/app/state/books.state';
@@ -32,9 +32,9 @@ export class AngularFireService {
           tap((data)=>{this.store.dispatch(new Books.SetBooks(data))}));
   }
 
-  //updates a single book data by querying the firestore collection by id
-  UpdateSingleBookDataByID(id:string, data: BookData) {
-    console.log(id, data)
+  //updates a single book data by optionally querying the firestore collection by id
+  //if no ID is passed it will make a new record
+  UpdateSingleBookData(data: BookData, id?:string) {
    return this.afs.collection<BookData>('Bookshelf').doc<BookData>(id).set(data, {merge: true})
   }
 
@@ -110,7 +110,7 @@ export class AngularFireService {
             map((imgs: BookImg[]) => {
               return values.map((book, i) => {
                 return { ...book, img_url: imgs[i]?.items ? imgs[i]?.items[0]?.volumeInfo?.imageLinks?.thumbnail : '/assets/imgs/placeHolder.jpg' };
-              });
+              }) as BookData[];
             })
           );
         }),

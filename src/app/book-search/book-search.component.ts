@@ -40,7 +40,7 @@ export class BookSearchComponent {
       });
       dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result?: BookData) => {
         if (!result) return;
-        this.angularFireService.UpdateSingleBookDataByID(data.docId, result).then(()=>      dialogRef.close())
+        this.angularFireService.UpdateSingleBookData(result, data.docId).then(()=>      dialogRef.close())
 
       });
 
@@ -74,7 +74,7 @@ export class BookSearchComponent {
   }
 
   public onEditBook(index: BookData): void {
-    this.angularFireService.getSingleBookDataByID(index.docId).pipe(take(1),takeUntil(this.destroy$)).subscribe((data) => {
+    this.angularFireService.getSingleBookDataByID(index.docId!).pipe(take(1),takeUntil(this.destroy$)).subscribe((data) => {
         this.openDialog(data);
       });
   }
