@@ -1,6 +1,6 @@
 export interface BookData {
   Author: string;
-  Category: string;
+  Category: 'Fiction' | 'Non Fiction' | 'Theology';
   Loan: boolean;
   Owned: boolean;
   ReadingNow: boolean;
@@ -9,5 +9,5 @@ export interface BookData {
   pages: number;
   year_read: number;
   img_url?: string;
-  fsId: string;
+  docId: string;
 }

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, forkJoin, map, Observable, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
@@ -28,12 +28,19 @@ export class AngularFireService {
   public getAllBooks(): Observable<BookData[]> {
     return this.store.selectSnapshot(Books.BookState.books)?.length ?
     this.store.select(Books.BookState.books) :
-    this.afs.collection<BookData>('Bookshelf').valueChanges().pipe(
+    this.afs.collection<BookData>('Bookshelf').valueChanges({idField: 'docId'}).pipe(
           tap((data)=>{this.store.dispatch(new Books.SetBooks(data))}));
   }
 
-  getBookData(id: string): Observable<BookData | undefined> {
-    return this.afs.collection<BookData>('Bookshelf').doc<BookData>().valueChanges({ idField: 'isbn' });
+  //updates a single book data by querying the firestore collection by id
+  UpdateSingleBookDataByID(id:string, data: BookData) {
+    console.log(id, data)
+   return this.afs.collection<BookData>('Bookshelf').doc<BookData>(id).set(data, {merge: true})
+  }
+
+  //gets a single book data by querying the firestore collection by id
+  getSingleBookDataByID(id: string): Observable<BookData | undefined> {
+    return this.afs.collection<BookData>('Bookshelf').doc<BookData>(id).valueChanges({idField: 'docId'}).pipe(tap((data)=>console.log(data)))
   }
   //set the initial value when the service is called
   public getBookShelfData(): void {

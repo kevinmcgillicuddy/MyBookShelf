@@ -8,10 +8,9 @@ import { BookData } from '../models/bookData';
 export class BookCardComponent {
   public loadingArray = Array.from({ length: 6 });
   @Input() books?: BookData[];
+  @Input() showEdit: boolean = false;
   @Output() editBook = new EventEmitter<BookData>();
   public onEdit(index: number){
-    console.log(index)
     this.editBook.emit(this.books![index]);
-    console.log(this.books![index])
   }
 }

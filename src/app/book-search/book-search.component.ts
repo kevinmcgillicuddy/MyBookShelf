@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { switchMap, filter, tap, debounceTime, distinctUntilChanged, map, BehaviorSubject } from 'rxjs';
+import { switchMap, filter, tap, debounceTime, distinctUntilChanged, map, BehaviorSubject, Subject, takeUntil, take } from 'rxjs';
 import { AngularFireService } from 'src/services/angular-fire.service';
 import { BookData } from '../models/bookData';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { CrudComponent } from '../admin/crud/crud.component';
 
 @Component({
   selector: 'app-book-search',
@@ -10,17 +12,42 @@ import { BookData } from '../models/bookData';
 })
 export class BookSearchComponent {
 
-  constructor(private readonly angularFireService: AngularFireService, private formBuilder: FormBuilder) { }
+  constructor(private readonly angularFireService: AngularFireService, private readonly dialog: MatDialog,private readonly formBuilder: FormBuilder) { }
 
-  bookData$ = new BehaviorSubject<{
+
+  private destroy$ = new Subject<boolean>();
+  public bookData$ = new BehaviorSubject<{
     isProcessing?: boolean;
-    result?: BookData[]}>({
-      result:[]
-    });
-  form: FormGroup<{ searchTerm: FormControl<string | null> }> = this.formBuilder.group({
+    result?: BookData[]
+  }>({
+    result: []
+  });
+  public form: FormGroup<{ searchTerm: FormControl<string | null> }> = this.formBuilder.group({
     searchTerm: ['', Validators.required],
   });
-  onSearch(): void {
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
+  private openDialog(data?: BookData): void {
+    if (!data) return;
+      const dialogRef = this.dialog.open(CrudComponent, {
+        data: {
+          ...data
+        },
+      });
+      dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result?: BookData) => {
+        if (!result) return;
+        this.angularFireService.UpdateSingleBookDataByID(data.docId, result).then(()=>      dialogRef.close())
+
+      });
+
+  }
+
+
+  public onSearch(): void {
     this.bookData$.next({ isProcessing: true })
     this.angularFireService.getAllBooks().pipe(
       filter(data => !!data),
@@ -36,7 +63,8 @@ export class BookSearchComponent {
             normalizedCategory.includes(normalizedSearchTerm)
           );
         });
-      }))
+      }),
+      takeUntil(this.destroy$))
       .subscribe((value) => {
         this.bookData$.next({
           result: value,
@@ -45,10 +73,9 @@ export class BookSearchComponent {
       });
   }
 
-  onEditBook(index: BookData): void {
-    console.log('called')
-    this.angularFireService.getBookData(index.fsId).subscribe((data) => {
-      console.log(data)
-    });
+  public onEditBook(index: BookData): void {
+    this.angularFireService.getSingleBookDataByID(index.docId).pipe(take(1),takeUntil(this.destroy$)).subscribe((data) => {
+        this.openDialog(data);
+      });
   }
 }

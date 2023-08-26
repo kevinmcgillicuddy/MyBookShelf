@@ -36,7 +36,8 @@
 </div>
 
 
-  <div *ngIf="bookData$ | async as bookData">  <app-book-card [books]="bookData.result" (editBook)="onEditBook($event)"></app-book-card>
+  <div *ngIf="bookData$ | async as bookData">
+    <app-book-card [books]="bookData.result" [showEdit]="true" (editBook)="onEditBook($event)"></app-book-card>
     <div *ngIf="bookData.isProcessing">
       <div class="flex items-center justify-center mb-4">
         <div

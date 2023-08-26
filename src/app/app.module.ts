@@ -19,19 +19,31 @@ import { NgxsModule } from '@ngxs/store';
 import { Books } from './state/books.state';
 import {AngularFireAuthModule} from '@angular/fire/compat/auth';
 import { LoginComponent } from './admin/login/login.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CrudComponent } from './admin/crud/crud.component';
+
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatRadioModule} from '@angular/material/radio';
+
 @NgModule({
   declarations: [
     AppComponent,
     BookCardComponent,
-      BookHeaderComponent,
-      BookViewComponent,
-      LoginComponent,
-      BookChartComponent,
-      BookSearchComponent
-   ],
+    CrudComponent,
+    BookHeaderComponent,
+    BookViewComponent,
+    LoginComponent,
+    BookChartComponent,
+    BookSearchComponent
+  ],
   imports: [
     InfiniteScrollModule,
     NgxChartsModule,
+    MatFormFieldModule,
+    MatRadioModule,
+    MatInputModule,
+    MatDialogModule,
     ReactiveFormsModule,
     BrowserModule,
     NgxsModule.forRoot([Books.BookState], {

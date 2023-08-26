@@ -17,10 +17,4 @@ export class BookViewComponent{
   async onScroll(): Promise<void> {
     this.angularFireService.getMoreShelfData();
   }
-  onEditBook(index: BookData): void {
-    console.log('asked for'+ index.isbn)
-    this.angularFireService.getBookData(index.isbn).subscribe((data) => {
-      console.log('got: ' + data)
-    });
-  }
 }
