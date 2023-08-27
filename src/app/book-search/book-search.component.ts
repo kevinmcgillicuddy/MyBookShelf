@@ -1,10 +1,11 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { switchMap, filter, tap, debounceTime, distinctUntilChanged, map, BehaviorSubject, Subject, takeUntil, take } from 'rxjs';
+import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable } from 'rxjs';
 import { AngularFireService } from 'src/services/angular-fire.service';
 import { BookData } from '../models/bookData';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CrudComponent } from '../admin/crud/crud.component';
+import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Component({
   selector: 'app-book-search',
@@ -12,9 +13,9 @@ import { CrudComponent } from '../admin/crud/crud.component';
 })
 export class BookSearchComponent {
 
-  constructor(private readonly angularFireService: AngularFireService, private readonly dialog: MatDialog,private readonly formBuilder: FormBuilder) { }
+  constructor(private readonly angularFireService: AngularFireService, private readonly dialog: MatDialog,private readonly formBuilder: FormBuilder, private readonly auth: AngularFireAuth) { }
 
-
+  canEdit$: Observable<boolean> = this.auth.authState.pipe(map((user) => !!user));
   private destroy$ = new Subject<boolean>();
   public bookData$ = new BehaviorSubject<{
     isProcessing?: boolean;
