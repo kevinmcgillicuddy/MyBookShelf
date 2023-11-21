@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { LegendPosition } from '@swimlane/ngx-charts';
-import { BehaviorSubject, take } from 'rxjs';
+import { BehaviorSubject, Observable, map, take } from 'rxjs';
 import { BookData } from '../models/bookData';
 import { AngularFireService } from 'src/services/angular-fire.service';
+import { HostListener } from "@angular/core";
 interface Count {
   name: string;
   value: number;
@@ -10,16 +11,21 @@ interface Count {
 @Component({
   selector: 'app-book-chart',
   templateUrl: './book-chart.component.html',
-})
+  })
 
 export class BookChartComponent implements OnInit {
-  constructor( private readonly angularFireService: AngularFireService) { }
-
+  constructor( private readonly angularFireService: AngularFireService, ) { }
   public legendPosition: LegendPosition = LegendPosition.Below;
   public categoryBreakDown$ = new BehaviorSubject<Count[] | undefined>(undefined);
   public yearBreakDown$ = new BehaviorSubject<Count[] | undefined>(undefined);
   public pagesPerYearBreakDown$ = new BehaviorSubject<{name:string, series: Count[]}[] | undefined>(undefined);
   public bookData$ = new BehaviorSubject<[{name:string, value: number}] | undefined>(undefined);
+  public screenWidth: number = Math.min(window.innerWidth, 700);;
+
+  @HostListener('window:resize', ['$event'])
+    onResize() {
+      this.screenWidth = Math.min(window.innerWidth, 700);;
+    }
 
   ngOnInit() {
     // Retrieve all book data from the "Bookshelf" collection in Firestore

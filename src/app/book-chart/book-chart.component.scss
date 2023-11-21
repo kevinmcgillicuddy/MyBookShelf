@@ -1,0 +1,11 @@
+ngx-charts-legend{
+  .legend-labels .horizontal-legend{
+    //override base CSS
+    overflow-x: scroll !important;
+  }
+
+}
+
+:host .legend-labels .horizontal-legend {
+  overflow-x: scroll !important;
+}

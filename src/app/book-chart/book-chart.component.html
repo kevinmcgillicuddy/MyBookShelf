@@ -1,16 +1,16 @@
 <div class="flex justify-center 1542:justify-start lg:m-8 md:flex-row flex-wrap gap-20">
   <ngx-charts-pie-chart *ngIf="categoryBreakDown$ | async as data; else loadingCategory" [results]="data"
-    [view]="[700, 400]" legendTitle="Books Per Category" [legend]="true" [legendPosition]="legendPosition">
+    [view]="[screenWidth, 400]" legendTitle="Books Per Category" [legend]="true" [legendPosition]="legendPosition">
   </ngx-charts-pie-chart>
-  <ngx-charts-bar-horizontal *ngIf="yearBreakDown$ | async as data; else loadingYears" [legend]="true" [xAxis]="true"
-    legendTitle="Books Per Year" [view]="[700,400]" [results]="data">
-  </ngx-charts-bar-horizontal>
-  <ngx-charts-line-chart *ngIf="pagesPerYearBreakDown$ | async as data; else loadingPageYears" [legend]="true"
-    [xAxis]="true" [yAxis]="true" legendTitle="Pages Per Year" [view]="[700,400]" [results]="data">
+  <ngx-charts-bar-vertical *ngIf="yearBreakDown$ | async as data; else loadingYears" [legend]="true" [legendPosition]="legendPosition" [xAxis]="true"
+    legendTitle="Books Per Year" [view]="[screenWidth,400]" [results]="data">
+  </ngx-charts-bar-vertical>
+  <ngx-charts-line-chart *ngIf="pagesPerYearBreakDown$ | async as data; else loadingPageYears"  [legendPosition]="legendPosition" [legend]="true"
+    [xAxis]="true" [yAxis]="true" legendTitle="Pages Per Year" [view]="[screenWidth,400]" [results]="data">
   </ngx-charts-line-chart>
   <ngx-charts-number-card
   *ngIf="bookData$ | async as data; else loadingBooks"
-  [view]="[700,400]"
+  [view]="[screenWidth,400]"
   [results]="data"
   >
 </ngx-charts-number-card>

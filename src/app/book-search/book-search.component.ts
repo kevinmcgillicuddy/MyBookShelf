@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable } from 'rxjs';
+import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable, switchMap, forkJoin } from 'rxjs';
 import { AngularFireService } from 'src/services/angular-fire.service';
 import { BookData } from '../models/bookData';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { CrudComponent } from '../admin/crud/crud.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { BookImg } from '../models/imgData';
 
 @Component({
   selector: 'app-book-search',
@@ -53,7 +54,7 @@ export class BookSearchComponent {
     this.angularFireService.getAllBooks().pipe(
       filter(data => !!data),
       map((data) => {
-        const normalizedSearchTerm = this.form!.controls.searchTerm.value!.toLowerCase();
+        const normalizedSearchTerm = this.form.controls.searchTerm.value!.toLowerCase();
         return data.filter(book => {
           const normalizedTitle = book.Title.toString()?.toLowerCase();
           const normalizedAuthor = book?.Author?.toLowerCase();
@@ -64,6 +65,15 @@ export class BookSearchComponent {
             normalizedCategory.includes(normalizedSearchTerm)
           );
         });
+      }),
+      switchMap((arr:BookData[]) => {
+        return forkJoin(arr.map(book => this.angularFireService.getImgs(book.isbn))).pipe(
+          map((imgs: BookImg[]) => {
+            return arr.map((book, i) => {
+              return { ...book, img_url: imgs[i]?.items ? imgs[i]?.items[0]?.volumeInfo?.imageLinks?.thumbnail : '/assets/imgs/placeHolder.jpg' };
+            }) as BookData[];
+          })
+        );
       }),
       takeUntil(this.destroy$))
       .subscribe((value) => {
