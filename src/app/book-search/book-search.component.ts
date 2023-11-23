@@ -42,7 +42,7 @@ export class BookSearchComponent {
       });
       dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result?: BookData) => {
         if (!result) return;
-        this.angularFireService.updateSingleBookData(result, data.docId).then(()=>      dialogRef.close())
+        this.angularFireService.updateSingleBookData(result, data.docId).then(()=>dialogRef.close())
 
       });
 

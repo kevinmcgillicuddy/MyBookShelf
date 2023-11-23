@@ -25,6 +25,9 @@ export class AngularFireService {
 
   constructor(private http: HttpClient, private afs: AngularFirestore, private store: Store) { }
 
+  public deleteBookData(id: string): void {
+    this.afs.collection<BookData>('Bookshelf').doc(id).delete()
+  }
   public getAllBooks(): Observable<BookData[]> {
     return this.store.selectSnapshot(Books.BookState.books)?.length ?
     this.store.select(Books.BookState.books) :

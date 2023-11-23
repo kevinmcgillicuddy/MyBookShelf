@@ -7,35 +7,35 @@
       <mat-form-field class="w-full">
         <mat-label>Title</mat-label>
         <input formControlName="Title" matInput placeholder="Author">
-
       </mat-form-field>
-
       <mat-form-field class="w-full">
       <mat-label>ISBN</mat-label>
       <input formControlName="isbn" matInput placeholder="Author">
     </mat-form-field>
-
-
     <mat-form-field class="w-full">
       <mat-label>Pages</mat-label>
       <input type="number" formControlName="pages" matInput placeholder="Author">
     </mat-form-field>
-
     <mat-form-field class="w-full">
       <mat-label>Year Read</mat-label>
       <input type="number" formControlName="year_read" matInput placeholder="Author">
     </mat-form-field>
-
+    <mat-form-field class="w-full">
+      <mat-label>Img Url</mat-label>
+      <input type="string" formControlName="img_url" matInput placeholder="Image url">
+    </mat-form-field>
       <mat-radio-group formControlName="Category"  aria-label="Select an category">
         <mat-radio-button value="Fiction">Fiction</mat-radio-button>
         <mat-radio-button value="Non Fiction">Non Fiction</mat-radio-button>
         <mat-radio-button value="Theology">Theology</mat-radio-button>
       </mat-radio-group>
-
       <button mat-button class="flex mx-auto mt-16 text-white border-0 py-2 px-8 focus:outline-none rounded text-lg"
       type="submit" [disabled]="!form.valid"
       [mat-dialog-close]="form.value" cdkFocusInitial
       [ngClass]="!form.valid ? 'bg-gray-300': 'bg-indigo-500 hover:bg-indigo-600'">Update</button>
-
+      <button mat-button class="flex mx-auto mt-16 text-white border-0 py-2 px-8 focus:outline-none rounded text-lg"
+      (click)="onDelete(data.docId)"
+      [mat-dialog-close]="form.value" cdkFocusInitial
+      [ngClass]="!form.valid ? 'bg-gray-300': 'bg-red-600 hover:bg-red-400'">Delete</button>
   </form>
 </div>
