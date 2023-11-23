@@ -27,7 +27,7 @@ export class BookHeaderComponent implements OnDestroy {
     const dialogRef = this.dialog.open(CrudComponent);
     dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result?: BookData) => {
       if (!result) return;
-      this.angularFireService.UpdateSingleBookData(result).then(() => dialogRef.close())
+      this.angularFireService.updateSingleBookData(result).then(() => dialogRef.close())
     });
   }
 }

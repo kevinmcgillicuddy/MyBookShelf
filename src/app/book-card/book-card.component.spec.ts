@@ -36,4 +36,10 @@ describe('BookCardComponent', () => {
     expect(fixture.debugElement.query(By.css('loading-container'))).toBeTruthy();
   })
 
+  it('should set edit books', () => {
+    component.showEdit = true;
+    fixture.detectChanges();
+    expect(fixture.debugElement.query(By.css('editButton'))).toBeTruthy();
+  });
+
 });

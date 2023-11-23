@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable, switchMap, forkJoin } from 'rxjs';
+import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable, switchMap, forkJoin, delay } from 'rxjs';
 import { AngularFireService } from 'src/services/angular-fire.service';
 import { BookData } from '../models/bookData';
 import { MatDialog } from '@angular/material/dialog';
@@ -42,7 +42,7 @@ export class BookSearchComponent {
       });
       dialogRef.afterClosed().pipe(takeUntil(this.destroy$)).subscribe((result?: BookData) => {
         if (!result) return;
-        this.angularFireService.UpdateSingleBookData(result, data.docId).then(()=>      dialogRef.close())
+        this.angularFireService.updateSingleBookData(result, data.docId).then(()=>      dialogRef.close())
 
       });
 
@@ -65,15 +65,6 @@ export class BookSearchComponent {
             normalizedCategory.includes(normalizedSearchTerm)
           );
         });
-      }),
-      switchMap((arr:BookData[]) => {
-        return forkJoin(arr.map(book => this.angularFireService.getImgs(book.isbn))).pipe(
-          map((imgs: BookImg[]) => {
-            return arr.map((book, i) => {
-              return { ...book, img_url: imgs[i]?.items ? imgs[i]?.items[0]?.volumeInfo?.imageLinks?.thumbnail : '/assets/imgs/placeHolder.jpg' };
-            }) as BookData[];
-          })
-        );
       }),
       takeUntil(this.destroy$))
       .subscribe((value) => {

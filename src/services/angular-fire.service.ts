@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, concat, concatMap, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, concat, concatMap, delay, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
 import { BookImg } from 'src/app/models/imgData';
 import { Books } from 'src/app/state/books.state';
@@ -34,13 +34,13 @@ export class AngularFireService {
 
   //updates a single book data by optionally querying the firestore collection by id
   //if no ID is passed it will make a new record
-  UpdateSingleBookData(data: BookData, id?:string) {
+  public updateSingleBookData(data: BookData, id?:string) {
    return this.afs.collection<BookData>('Bookshelf').doc<BookData>(id).set(data, {merge: true})
   }
 
   //gets a single book data by querying the firestore collection by id
-  getSingleBookDataByID(id: string): Observable<BookData | undefined> {
-    return this.afs.collection<BookData>('Bookshelf').doc<BookData>(id).valueChanges({idField: 'docId'}).pipe(tap((data)=>console.log(data)))
+  public getSingleBookDataByID(id: string): Observable<BookData | undefined> {
+    return this.afs.collection<BookData>('Bookshelf').doc<BookData>(id).valueChanges({idField: 'docId'})
   }
   //set the initial value when the service is called
   public getBookShelfData(): void {
@@ -99,20 +99,7 @@ export class AngularFireService {
           this._booksData$.next({ ...this._booksData$.value, cursor: arr[arr.length - 1].payload.doc })
 
           // Map the array of changes to an array of BookData objects.
-          const values = arr.map(snap => ({...snap.payload.doc.data(), fsId: snap.payload.doc.id, } as BookData))
-
-          // Map each BookData object to an Observable of BookImg objects using the 'getImgs' method.
-          const imgObservables = values.map(book => this.getImgs(book.isbn));
-
-          // Combine the Observables of BookImg objects into a single Observable using 'forkJoin'.
-          return forkJoin(imgObservables).pipe(
-            // Map the original array of BookData objects to a new array that includes the URL of the book cover image or a default gray one.
-            map((imgs: BookImg[]) => {
-              return values.map((book, i) => {
-                return { ...book, img_url: imgs[i]?.items ? imgs[i]?.items[0]?.volumeInfo?.imageLinks?.thumbnail : '/assets/imgs/placeHolder.jpg' };
-              }) as BookData[];
-            })
-          );
+          return of(arr.map(snap => ({...snap.payload.doc.data(), fsId: snap.payload.doc.id, } as BookData)))
         }),
         // Ensure that the Observable completes after emitting a single value.
         take(1)
@@ -121,7 +108,7 @@ export class AngularFireService {
   }
 
   //takes an isbn number and returns an observable of BookImg from the Google Books API
-  getImgs(isbn: string): Observable<BookImg> {
+  private getImgs(isbn: string): Observable<BookImg> {
     return this.http.get<BookImg>(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
   }
 
