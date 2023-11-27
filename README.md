@@ -1,12 +1,9 @@
-# RiskRoller
+# MyBookShelf
 
-[![codecov](https://codecov.io/gh/kevinmcgillicuddy/risk-roller/graph/badge.svg?token=5978VA5LCY)](https://codecov.io/gh/kevinmcgillicuddy/risk-roller)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_risk-roller&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_risk-roller)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_risk-roller&metric=bugs)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_risk-roller)
-[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_risk-roller&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_risk-roller)
-[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_risk-roller&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_risk-roller)
-
-This project is used for the time late in a Risk board game when you have 2 large armies going at it and your friends are sitting around watching other people roll dice. This will allow you to quick simulate any battle in Risk the board Game
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=bugs)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
 
 Live Preview here:
 https://bookshelf.mcgillicuddy.dev
