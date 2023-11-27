@@ -34,4 +34,4 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 This project uses Firebase Hosting to deploy onto AWS Cloud and setup the infrastructure. Details are found in cdk folder.
 
-[<img src="./tech_used/firebase.svg" />](./firebase.svg)
+[<img src="./tech_used/firebase.svg" width="100"/>](./firebase.svg)
