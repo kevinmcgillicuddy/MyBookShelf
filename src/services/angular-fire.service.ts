@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, concat, concatMap, delay, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
-import { BookImg } from 'src/app/models/imgData';
 import { Books } from 'src/app/state/books.state';
 @Injectable({
   providedIn: 'root'
@@ -23,7 +21,7 @@ export class AngularFireService {
 
   public bookData$ = this._booksData$.asObservable();
 
-  constructor(private http: HttpClient, private afs: AngularFirestore, private store: Store) { }
+  constructor(private afs: AngularFirestore, private store: Store) { }
 
   public deleteBookData(id: string): void {
     this.afs.collection<BookData>('Bookshelf').doc(id).delete()
@@ -109,10 +107,4 @@ export class AngularFireService {
       )
       .subscribe((result) => this._booksData$.next({ ...this._booksData$.value, result: this._booksData$.value.result?.concat(...result), isProcessing: false }))
   }
-
-  //takes an isbn number and returns an observable of BookImg from the Google Books API
-  private getImgs(isbn: string): Observable<BookImg> {
-    return this.http.get<BookImg>(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
-  }
-
 }

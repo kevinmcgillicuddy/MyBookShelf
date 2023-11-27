@@ -21,11 +21,12 @@ export class LoginComponent implements OnDestroy {
 
 
   login(): void {
-  this.auth.signInWithEmailAndPassword(this.loginForm.controls['email'].value,
-    this.loginForm.controls['password'].value)
-    .then((result) => { console.log(result);
-    this.router.navigate(['/']) })
-    .catch((error) => { this.loginFailure$.next(error) })
+  this.auth.signInWithEmailAndPassword(this.loginForm.controls['email'].value,this.loginForm.controls['password'].value).then((_) => {
+    this.router.navigate(['/'])
+  }).catch((error) => {
+     this.loginFailure$.next(error)
+  });
+
   };
 
   ngOnDestroy() {
