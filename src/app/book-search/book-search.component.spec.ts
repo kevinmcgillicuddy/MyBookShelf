@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule, FormBuilder, FormControl } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { of, BehaviorSubject } from 'rxjs';
+import { of } from 'rxjs';
 import { AngularFireService } from 'src/services/angular-fire.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { BookSearchComponent } from './book-search.component';
 import { BookData } from '../models/bookData';
-import { MatDialogRef } from '@angular/material/dialog';
 
 describe('BookSearchComponent', () => {
   let component: BookSearchComponent;

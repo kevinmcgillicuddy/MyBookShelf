@@ -1,10 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
-import { BehaviorSubject, concat, concatMap, delay, filter, forkJoin, map, Observable, of, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
-import { BookImg } from 'src/app/models/imgData';
 import { Books } from 'src/app/state/books.state';
 @Injectable({
   providedIn: 'root'
