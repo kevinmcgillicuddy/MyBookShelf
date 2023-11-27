@@ -1,5 +1,6 @@
 # MyBookShelf
 
+[![codecov](https://codecov.io/gh/kevinmcgillicuddy/MyBookShelf/graph/badge.svg?token=XTMRC45L6I)](https://codecov.io/gh/kevinmcgillicuddy/MyBookShelf)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=bugs)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
@@ -34,4 +35,4 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 This project uses Firebase Hosting to deploy onto AWS Cloud and setup the infrastructure. Details are found in cdk folder.
 
-[<img src="./tech_used/firebase.svg" />](./firebase.svg)
+[<img src="./tech_used/firebase.svg" width="100"/>](./firebase.svg)
