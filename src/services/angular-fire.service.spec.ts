@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { AngularFireService } from './angular-fire.service';
 import { AngularFirestore, AngularFirestoreModule, USE_EMULATOR } from '@angular/fire/compat/firestore';
-import { BookData } from 'src/app/models/bookData';
 import { Store } from '@ngxs/store';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, DocumentSnapshot, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
+import { AngularFirestore, AngularFirestoreCollection, DocumentChangeAction, DocumentData, QueryDocumentSnapshot } from '@angular/fire/compat/firestore';
 import { Store } from '@ngxs/store';
 import { BehaviorSubject, Observable, of, switchMap, take, tap } from 'rxjs';
 import { BookData } from 'src/app/models/bookData';
