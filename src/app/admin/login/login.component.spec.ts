@@ -3,7 +3,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginComponent } from './login.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { lastValueFrom } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -63,10 +62,8 @@ describe('LoginComponent', () => {
   });
 
   it('should call signInWithEmailAndPassword on login', fakeAsync(() => {
-    // Set form values
     component.loginForm.setValue({ email: 'test@example.com', password: 'password123' });
 
-    // Set up a fake user for authentication
     const fakeUser = {
       user: {
         uid: 'fakeUserId',
@@ -74,35 +71,27 @@ describe('LoginComponent', () => {
       },
     };
 
-    // Mock signInWithEmailAndPassword to return a promise with the fake user
     mockAuth.signInWithEmailAndPassword.and.returnValue(Promise.resolve(fakeUser as any));
-
-    // Call the login method
     component.login();
     tick();
-
-    // Expect signInWithEmailAndPassword to be called with the provided email and password
     expect(mockAuth.signInWithEmailAndPassword).toHaveBeenCalledWith('test@example.com', 'password123');
-
     // Expect router.navigate to be called with the home route
     expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
   }));
 
   it('should handle login failure', fakeAsync(async () => {
-    // Set form values
     component.loginForm.setValue({ email: 'test@example.com', password: 'password123' });
-
-    // Mock signInWithEmailAndPassword to return a rejected promise with an error
-    mockAuth.signInWithEmailAndPassword.and.throwError(mockError);
-
-    // Call the login method
+    mockAuth.signInWithEmailAndPassword.and.returnValue(Promise.reject(mockError));
     component.login();
     tick();
-    // Expect loginFailure$ to emit the error
-   await lastValueFrom(component.loginFailure$).then((a)=>console.log(a)).then((error) => {
-      console.log(error)
-      // expect(error).toEqual(mockError);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+    component.loginFailure$.subscribe({
+      next: (error) => {
+        expect(error).toBe(mockError);
+      }
     });
+  });
   }));
 
 });

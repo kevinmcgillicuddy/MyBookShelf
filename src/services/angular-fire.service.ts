@@ -23,7 +23,7 @@ export class AngularFireService {
 
   public bookData$ = this._booksData$.asObservable();
 
-  constructor(private http: HttpClient, private afs: AngularFirestore, private store: Store) { }
+  constructor(private afs: AngularFirestore, private store: Store) { }
 
   public deleteBookData(id: string): void {
     this.afs.collection<BookData>('Bookshelf').doc(id).delete()
@@ -109,10 +109,4 @@ export class AngularFireService {
       )
       .subscribe((result) => this._booksData$.next({ ...this._booksData$.value, result: this._booksData$.value.result?.concat(...result), isProcessing: false }))
   }
-
-  //takes an isbn number and returns an observable of BookImg from the Google Books API
-  private getImgs(isbn: string): Observable<BookImg> {
-    return this.http.get<BookImg>(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
-  }
-
 }
