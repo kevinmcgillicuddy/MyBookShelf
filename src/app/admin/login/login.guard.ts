@@ -1,7 +1,7 @@
 import { inject } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
-import { ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, RouterStateSnapshot } from "@angular/router";
-import { map, tap } from "rxjs";
+import { ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, RouterStateSnapshot } from "@angular/router";
+import { map } from "rxjs";
 
 export const canActivateLogin: CanActivateFn = (
   route: ActivatedRouteSnapshot,

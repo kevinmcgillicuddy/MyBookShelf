@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable, switchMap, forkJoin, delay } from 'rxjs';
+import { filter, map, BehaviorSubject, Subject, takeUntil, take, Observable } from 'rxjs';
 import { AngularFireService } from 'src/services/angular-fire.service';
 import { BookData } from '../models/bookData';
 import { MatDialog } from '@angular/material/dialog';
 import { CrudComponent } from '../admin/crud/crud.component';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { BookImg } from '../models/imgData';
 
 @Component({
   selector: 'app-book-search',

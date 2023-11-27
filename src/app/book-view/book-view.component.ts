@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { AngularFireService } from 'src/services/angular-fire.service';
-import { BookData } from '../models/bookData';
 
 @Component({
   selector: 'app-book-view',
