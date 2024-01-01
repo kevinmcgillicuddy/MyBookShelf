@@ -6,6 +6,8 @@
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kevinmcgillicuddy_MyBookShelf&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kevinmcgillicuddy_MyBookShelf)
 
+This is an Angular app that shows books I have read, the ability to search them and view some metrics. The application also has an admin side allowing me to add, edit and remove books. 
+
 Live Preview here:
 https://bookshelf.mcgillicuddy.dev
 
@@ -33,6 +35,6 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Deployment
 
-This project uses Firebase Hosting to deploy.
+This project uses Firebase Hosting to deploy and Firebase Firestore for a simple NoSQL DB.
 
 [<img src="./tech_used/firebase.svg" width="100"/>](./firebase.svg)
