@@ -1,5 +1,6 @@
 <div>
-  <div *ngIf="booksData$ | async as bookData">
+  <!-- style="overflow-y: scroll; height:1200px" -->
+  <div *ngIf="booksData$ | async as bookData" >
     <app-book-card [books]="bookData.result"></app-book-card>
     <!-- #region spinner -->
     <div *ngIf="bookData.isProcessing">

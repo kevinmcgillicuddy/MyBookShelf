@@ -61,7 +61,7 @@ export class AngularFireService {
  *  */
   private generateCollection(cursor?: QueryDocumentSnapshot<DocumentData>): AngularFirestoreCollection<BookData> {
     return this.afs.collection<BookData>('Bookshelf', ref => {
-      return cursor ? ref.orderBy('year_read','desc').startAfter(cursor).limit(8) : ref.orderBy('year_read', 'desc').limit(8)
+      return cursor ? ref.orderBy('year_read','desc').startAfter(cursor).limit(10) : ref.orderBy('year_read', 'desc').limit(10)
     })
   }
 
